@@ -1,19 +1,31 @@
 from django.utils.translation import ugettext_lazy as __
 from django.db import models
-from . import enforce_rating
 from common.models import Stamps
+
+
+def enforce_rating(obj):
+    if isinstance(obj, dict):
+        if obj['selection'].rating != obj['rating']:
+            raise Exception('Selection does not match Rating')
+    else:
+        if getattr(obj, 'selection').rating != getattr(obj, 'rating'):
+            raise Exception('Selection does not match Rating')
 
 
 class Rating(Stamps, models.Model):
     name = models.CharField(max_length=64)
     description = models.CharField(help_text=__('This is the question for users to answer'), max_length=255)
     max_value = models.IntegerField(editable=False)
-    weight = models.IntegerField(__('Add a weight this rating has for calculating a players rank. E.g. if everything is equal make them all 1, if something is twice as important 2 and 1, or everything 3 and something that matters little a 1'))
-    exclusive_options = models.BooleanField(__('Check if you can only select one option, otherwise someone may select as many as they live'))
+    weight = models.IntegerField(help_text=__("""Add a weight this rating has for calculating a players rank.
+                                              E.g. if everything is equal make them all 1, if something is
+                                              twice as important 2 and 1, or everything 3 and something that
+                                              matters little a 1"""))
+    exclusive_options = models.BooleanField(help_text=__("""Check if you can only select one option,
+                                                         otherwise someone may select as many as they live"""))
     ranksets = models.ManyToManyField('RankSet', related_name="ratings")
 
     def _calc_max(self):
-        self.max_value = sum([ option.value for option in self.options.all() ])
+        self.max_value = sum([option.value for option in self.options.all()])
 
     def save(self, *args, **kwargs):
         self._calc_max()
@@ -34,7 +46,7 @@ class RatingOption(Stamps, models.Model):
 
 
 class PlayerRatingManager(models.Manager):
-    
+
     def create(self, *args, **kwargs):
         enforce_rating(kwargs)
         return super(PlayerRatingManager, self).create(*args, **kwargs)
@@ -62,7 +74,7 @@ class PlayerRatingComputed(Stamps, models.Model):
 class Ranking(Stamps, models.Model):
     rank = models.PositiveIntegerField()
     player = models.ForeignKey('common.Player')
-    rankset = models.ForeignKey('Rankset')
+    rankset = models.ForeignKey('RankSet')
 
     class Meta:
         unique_together = ['rank', 'player', 'rankset']

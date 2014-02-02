@@ -13,7 +13,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -50,9 +49,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'thegreco.urls'
+ROOT_URLCONF = 'urls'
 
-WSGI_APPLICATION = 'thegreco.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
+
+# this is not a Django setting.
+_PROJECT_ROOT = os.environ.get('X_DJANGO_PROJECT_PATH', os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Database
@@ -60,8 +62,11 @@ WSGI_APPLICATION = 'thegreco.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'thegreco',
+        'HOST': '127.0.0.1',
+        'USER': 'root',
+        'PASSWORD': ''
     }
 }
 
@@ -76,7 +81,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-FORMAT_MODULE_PATH = 'thegreco.common.formats'
+FORMAT_MODULE_PATH = 'formats'
 
 
 # Static files (CSS, JavaScript, Images)

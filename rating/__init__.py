@@ -1,13 +1,4 @@
-from .models import PlayerRatingComputed, PlayerRatingSelection
-
-
-def enforce_rating(obj):
-    if type(obj) == type({}):
-        if obj['selection'].rating != obj['rating']:
-            raise Exception('Selection does not match Rating')
-    else:
-        if getattr(obj, 'selection').rating != getattr(obj, 'rating'):
-            raise Exception('Selection does not match Rating')
+from rating.models import PlayerRatingComputed, PlayerRatingSelection
 
 
 def get_ratings_for_set(rankset):
@@ -15,7 +6,7 @@ def get_ratings_for_set(rankset):
 
 
 def get_weight_total_for_set(rankset):
-    return sum([ rating.weight for rating in rankset.ratings.all() ])
+    return sum([rating.weight for rating in rankset.ratings.all()])
 
 
 def calculate_rating_for_player(player, rankset, total_weight=None):

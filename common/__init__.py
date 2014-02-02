@@ -1,4 +1,4 @@
-from .models import Player, Season, TeamPlayerSeason
+from common.models import Player, Season, TeamPlayerSeason
 
 
 class PermissionsException(Exception):
@@ -12,13 +12,13 @@ def captain_or_self_or_superuser(exception_message):
             player = args[1]
             team = args[2]
             season = args[3]
-            if user.is_superuser or user.is_captain(team, season) or user==player:
+            if user.is_superuser or user.is_captain(team, season) or user == player:
                 return func(*args, **kwargs)
             else:
                 raise PermissionsException(exception_message)
         return newfn
     return actual_decorator
-        
+
 
 def find_teams_for(season):
     return season.teams.all()
