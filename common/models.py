@@ -7,11 +7,8 @@ from django.utils import formats
 
 
 class Stamps(models.Model):
-    """
-    Putting this here to solve circular reference problems in loading
-    """
-    created_on = models.DateTimeField(auto_now_add=True)
-    modified_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True, editable=False)
+    modified_on = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
         abstract = True
@@ -49,7 +46,7 @@ class Player(Stamps, AbstractBaseUser):
     name = models.CharField(__('Full name'), max_length=64)
     email = models.EmailField()
     gender = models.IntegerField(__('I identify my sex as'), choices=GENDER_CHOICES, blank=True, null=True)
-    seasons = models.ManyToManyField('Season', related_name="players")
+    seasons = models.ManyToManyField('Season', related_name="players", through='PlayerSeasons')
 
     @property
     def display_name(self):
@@ -61,11 +58,28 @@ class Player(Stamps, AbstractBaseUser):
     def get_short_name(self):
         return self.name
 
+    def is_superuser(self):
+        return False
+
     def __unicode__(self):
         return self.display_name
 
-    def is_captain(self, season, team):
+    def is_captain(self, team, season):
         return True if self.season_teams.filter(season=season, team=team, is_captain=True).count() > 0 else False
+
+
+class PlayerSeasons(Stamps, models.Model):
+    """
+    Through model for created timestamp, ordering for waitlist
+    """
+    player = models.ForeignKey('Player')
+    season = models.ForeignKey('Season')
+
+
+class OpenSeasonManager(models.Manager):
+    
+    def get_query_set(self):
+        return super(OpenSeasonManager, self).get_query_set().filter(is_open=True)
 
 
 class Season(Stamps, models.Model):
@@ -78,9 +92,12 @@ class Season(Stamps, models.Model):
     answerable_rankset = models.ForeignKey('rating.RankSet', blank=None, null=True,
                                            related_name="answerable_for_seasons",
                                            help_text=__('The questions for ranking you want players to answer'))
+    signup_cap = models.PositiveIntegerField(help_text=__('Everyone after this # is on the waitlist'),
+                                             null=True, blank=True)
 
     objects = ShownManager()
     active = ActiveManager()
+    open = OpenSeasonManager()
     verbose = models.Manager()
 
     def __unicode__(self):
@@ -89,11 +106,14 @@ class Season(Stamps, models.Model):
 
 class Team(Stamps, models.Model):
     name = models.CharField(max_length=64)
-    is_hidden = models.BooleanField(help_text=__('Hidden from players'), default=True)
+    is_hidden = models.BooleanField(help_text=__('Hidden from players'), default=False)
     seasons = models.ManyToManyField('Season', related_name="teams")
 
     objects = ShownManager()
     verbose = models.Manager()
+
+    def __unicode__(self):
+        return self.name
 
 
 class TeamPlayerSeason(Stamps, models.Model):

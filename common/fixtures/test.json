@@ -1,0 +1,129 @@
+[
+    {
+        "pk": 1, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John Doe",
+            "email": "john@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "common.player", 
+        "fields": {
+            "name": "Sally Mae",
+            "email": "sally@mae.com",
+            "gender": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "common.player", 
+        "fields": {
+            "name": "On a team",
+            "email": "on@team.com",
+            "gender": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "common.player", 
+        "fields": {
+            "name": "No seasons",
+            "email": "no@seasons.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "common.season", 
+        "fields": {
+            "is_open": "False",
+            "name": "Old!",
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "common.season", 
+        "fields": {
+            "is_open": "True",
+            "name": "Open For Reg!",
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "common.season", 
+        "fields": {
+            "is_open": "False",
+            "is_active": "True",
+            "name": "Playing!",
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 1,
+            "season": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 2,
+            "season": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 3,
+            "season": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "common.team", 
+        "fields": {
+            "name": "A Team",
+            "seasons": [1,2],
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "common.teamplayerseason",
+        "fields": {
+            "team": 1,
+            "player": 3,
+            "season": 1,
+            "is_captain": "True",
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    }
+]
