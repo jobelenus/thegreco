@@ -13,7 +13,7 @@ class PermissionsException(Exception):
 def captain_or_self_or_superuser(exception_message):
     def actual_decorator(func):
         def newfn(*args, **kwargs):
-            if kwargs['user'].is_superuser or \
+            if kwargs['user'].is_superuser() or \
                kwargs['user'].is_captain(kwargs['team'], kwargs['season']) or \
                kwargs['user'] == kwargs['player']:
                 return func(*args, **kwargs)
@@ -35,8 +35,7 @@ def enforce_kwargs(func):
 def active_player_or_open_season(exception_message):
     def actual_decorator(func):
         def newfn(*args, **kwargs):
-            if not kwargs['season'].is_open and \
-               kwargs['season'] not in kwargs['player'].seasons.all():
+            if kwargs['season'] not in kwargs['player'].seasons.all():
                 raise PermissionsException(exception_message)
             elif kwargs['season'].is_active is False and kwargs['season'].is_open is False:
                 raise PermissionsException(exception_message)
@@ -68,6 +67,8 @@ def find_captains_on(team, season):
 
 
 def add_player_to_season(player, season):
+    if not season.is_open:
+        raise PermissionsException(PermissionsException.MSG_SEASON)
     player.seasons.add(season)
 
 
