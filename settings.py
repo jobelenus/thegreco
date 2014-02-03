@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'common',
     'rating',
+    'schedule'
 )
 
 MIDDLEWARE_CLASSES = (

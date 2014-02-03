@@ -72,6 +72,10 @@ def add_player_to_season(player, season):
     player.seasons.add(season)
 
 
+def find_players_in_season(season):
+    return season.players.all()
+
+
 @enforce_kwargs
 @captain_or_self_or_superuser(PermissionsException.MSG_CAPTAIN_ADD)
 @active_player_or_open_season(PermissionsException.MSG_SEASON)

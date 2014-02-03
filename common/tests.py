@@ -3,7 +3,7 @@ import common
 
 
 class TestCommon(TestCase):
-    fixtures = ['test',]
+    fixtures = ['test']
 
     def setUp(self):
         self.season_old = common.Season.objects.get(id=1)
@@ -40,7 +40,7 @@ class TestCommon(TestCase):
         common.add_player_to_team(user=self.player1, player=self.player1, season=self.season_open, team=self.team)
         self.assertEqual(1, common.TeamPlayerSeason.objects.filter(player=self.player1, season=self.season_open, team=self.team).count())
         common.add_player_to_team(user=self.player2, player=self.player2, season=self.season_open, team=self.team, is_captain=True)
-        self.assertTrue(self.player2.is_captain(self.team, self.season_open)) 
+        self.assertTrue(self.player2.is_captain(self.team, self.season_open))
         self.assertEqual(2, len(common.find_players_on(self.team, self.season_open)))
         common.remove_player_from_team(user=self.player1, player=self.player1, season=self.season_open, team=self.team)
         self.assertEqual(1, len(common.find_players_on(self.team, self.season_open)))

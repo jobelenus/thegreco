@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as __
 from django.db import models
-from common.models import Stamps
+from common.models import Stamps, DirtyFieldsMixin
 
 
 def enforce_rating(obj):
@@ -25,21 +25,25 @@ class Rating(Stamps, models.Model):
     ranksets = models.ManyToManyField('RankSet', related_name="ratings")
 
     def _calc_max(self):
-        self.max_value = sum([option.value for option in self.options.all()])
-
-    def save(self, *args, **kwargs):
-        self._calc_max()
-        super(Rating, self).save(*args, **kwargs)
+        operation = max if self.exclusive_options else sum
+        self.max_value = operation([option.value for option in self.options.all()])
 
     def __unicode__(self):
         return self.name
 
 
-class RatingOption(Stamps, models.Model):
+class RatingOption(DirtyFieldsMixin, Stamps, models.Model):
     rating = models.ForeignKey('Rating', related_name='options')
     name = models.CharField(max_length=255)
     value = models.IntegerField()
     ranksets = models.ManyToManyField('RankSet')
+
+    def save(self, *args, **kwargs):
+        if self.is_dirty():
+            if 'value' in self.get_dirty_fields().keys():
+                self.rating._calc_max()
+                self.rating.save()
+        return super(RatingOption, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
@@ -71,7 +75,7 @@ class PlayerRatingComputed(Stamps, models.Model):
     total_rating = models.IntegerField(editable=False)
 
 
-class Ranking(Stamps, models.Model):
+class PlayerRanking(Stamps, models.Model):
     rank = models.PositiveIntegerField()
     player = models.ForeignKey('common.Player')
     rankset = models.ForeignKey('RankSet')
