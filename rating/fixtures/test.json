@@ -1,0 +1,114 @@
+[
+    {
+        "pk": 1,
+        "model": "rating.RankSet",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "name": "A Test - Empty",
+            "season": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "rating.RankSet",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "name": "A Test - Full",
+            "season": 1
+        }
+    },
+    {
+        "pk": 1,
+        "model": "rating.Rating",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "ranksets": [1],
+            "name": "Rating 1",
+            "description": "Rating 1",
+            "exclusive_options": "True",
+            "weight": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "rating.Rating",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "ranksets": [1],
+            "name": "Rating 2",
+            "description": "Rating 2",
+            "exclusive_options": "False",
+            "weight": 1
+        }
+    },
+    {
+        "pk": 1,
+        "model": "rating.RatingOption",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rating": 1,
+            "name": "R1 Option 1",
+            "value": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "rating.RatingOption",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rating": 1,
+            "name": "R1 Option 2",
+            "value": 2
+        }
+    },
+    {
+        "pk": 3,
+        "model": "rating.RatingOption",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rating": 1,
+            "name": "R1 Option 3",
+            "value": 3
+        }
+    },
+    {
+        "pk": 4,
+        "model": "rating.RatingOption",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rating": 2,
+            "name": "R1 Option 1",
+            "value": 1
+        }
+    },
+    {
+        "pk": 5,
+        "model": "rating.RatingOption",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rating": 2,
+            "name": "R1 Option 2",
+            "value": 2
+        }
+    },
+    {
+        "pk": 6,
+        "model": "rating.RatingOption",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rating": 2,
+            "name": "R1 Option 3",
+            "value": 3
+        }
+    }
+]

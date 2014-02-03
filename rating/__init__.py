@@ -1,4 +1,4 @@
-from rating.models import PlayerRatingComputed, PlayerRatingSelection, PlayerRanking
+from rating.models import PlayerRatingComputed, PlayerRatingSelection, PlayerRanking, RankSet, Rating
 from collections import defaultdict
 
 

@@ -15,7 +15,7 @@ def enforce_rating(obj):
 class Rating(Stamps, models.Model):
     name = models.CharField(max_length=64)
     description = models.CharField(help_text=__('This is the question for users to answer'), max_length=255)
-    max_value = models.IntegerField(editable=False)
+    max_value = models.IntegerField(editable=False, default=0)
     weight = models.IntegerField(help_text=__("""Add a weight this rating has for calculating a players rank.
                                               E.g. if everything is equal make them all 1, if something is
                                               twice as important 2 and 1, or everything 3 and something that
@@ -36,7 +36,6 @@ class RatingOption(DirtyFieldsMixin, Stamps, models.Model):
     rating = models.ForeignKey('Rating', related_name='options')
     name = models.CharField(max_length=255)
     value = models.IntegerField()
-    ranksets = models.ManyToManyField('RankSet')
 
     def save(self, *args, **kwargs):
         if self.is_dirty():
