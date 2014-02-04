@@ -14,3 +14,9 @@ before_script:
   - python manage.py syncdb --noinput
 script:
   - python manage.py test common rating
+notifications:
+  email:
+    recipients:
+      - jobelenus@gmail.com
+    on_success: [never]
+    on_failure: [always]
