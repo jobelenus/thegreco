@@ -70,13 +70,13 @@ class ShownManager(models.Manager):
 # Real Models
 
 class Player(Stamps, AbstractBaseUser):
-    ON_FIELD_MALE = 1
-    ON_FIELD_FEMALE = 2
+    ON_FIELD_MALE = (1, 4)
+    ON_FIELD_FEMALE = (2, 3)
     GENDER_CHOICES = (
-        (ON_FIELD_MALE, 'Male'),
-        (ON_FIELD_FEMALE, 'Female'),
-        (ON_FIELD_FEMALE, 'MtF Female'),
-        (ON_FIELD_MALE, 'FtM Male'),
+        (1, 'Male'),
+        (2, 'Female'),
+        (3, 'MtF Female'),
+        (4, 'FtM Male'),
     )
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'email']
@@ -84,6 +84,13 @@ class Player(Stamps, AbstractBaseUser):
     email = models.EmailField()
     gender = models.IntegerField(__('I identify my sex as'), choices=GENDER_CHOICES, blank=True, null=True)
     seasons = models.ManyToManyField('Season', related_name="players", through='PlayerSeasons')
+
+    @property
+    def playing_as_male(self):
+        return True if self.gender in Player.ON_FIELD_MALE else False
+
+    def playing_as_female(self):
+        return True if self.gender in Player.ON_FIELD_FEMALE else False
 
     @property
     def display_name(self):
@@ -120,6 +127,16 @@ class OpenSeasonManager(models.Manager):
 
 
 class Season(Stamps, models.Model):
+    GENDER_OPEN = 1
+    GENDER_52 = 2
+    GENDER_43 = 3
+    GENDER_WOMEN = 4
+    GENDER_RULES = (
+        (GENDER_OPEN, __('Open')),
+        (GENDER_52, __('5/2')),
+        (GENDER_43, __('4/3')),
+        (GENDER_WOMEN, __('Women')),
+    )
     is_active = models.BooleanField(help_text=__('Is currently being played'), default=False)
     is_open = models.BooleanField(help_text=__('Is open for registration'), default=False)
     is_hidden = models.BooleanField(help_text=__('Hidden from players'), default=False)
@@ -134,6 +151,7 @@ class Season(Stamps, models.Model):
                                            help_text=__('The actual schedule teams are going to follow'))
     signup_cap = models.PositiveIntegerField(help_text=__('Everyone after this # is on the waitlist'),
                                              null=True, blank=True)
+    gender_rule = models.IntegerField(choices=GENDER_RULES, default=1)
 
     objects = ShownManager()
     active = ActiveManager()
@@ -142,6 +160,13 @@ class Season(Stamps, models.Model):
 
     def __unicode__(self):
         return "%s (%s-%s)" % (self.name, formats.date_format(self.starts_on), formats.date_format(self.starts_on))
+
+    def gender_rule_is(self, const):
+        return True if self.gender_rule == const else False
+
+    @property
+    def gender_rule_is_women(self):
+        return self.gender_rule_is(Season.GENDER_WOMEN)
 
 
 class Team(Stamps, models.Model):

@@ -75,6 +75,18 @@
         }
     },
     {
+        "pk": 4, 
+        "model": "common.season", 
+        "fields": {
+            "is_open": "True",
+            "is_active": "False",
+            "name": "Womens!",
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "gender_rule": 4
+        }
+    },
+    {
         "pk": 1,
         "model": "common.playerseasons",
         "fields": {

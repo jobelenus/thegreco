@@ -9,6 +9,7 @@ class TestCommon(TestCase):
         self.season_old = common.Season.objects.get(id=1)
         self.season_open = common.Season.objects.get(id=2)
         self.season_active = common.Season.objects.get(id=3)
+        self.season_womens = common.Season.objects.get(id=4)
         self.player1 = common.Player.objects.get(id=1)
         self.player2 = common.Player.objects.get(id=2)
         self.player3 = common.Player.objects.get(id=3)
@@ -48,6 +49,19 @@ class TestCommon(TestCase):
         self.assertEqual(2, len(common.find_players_on(self.team, self.season_open)))
         common.remove_player_from_team(user=self.player2, player=self.player1, season=self.season_open, team=self.team)
         self.assertEqual(1, len(common.find_players_on(self.team, self.season_open)))
+
+    def test_gender_rules(self):
+        self.assertRaisesMessage(common.PermissionsException, common.PermissionsException.MSG_ELIGIBLE,
+                                 common.add_player_to_season, player=self.player1, season=self.season_womens)
+        common.add_player_to_season(player=self.player2, season=self.season_womens)
+
+    def test_duplicate_player(self):
+        # cannot add a player to a team twice
+        common.add_player_to_team(user=self.player1, player=self.player1, season=self.season_open, team=self.team)
+        self.assertEqual(1, common.TeamPlayerSeason.objects.filter(player=self.player1, season=self.season_open, team=self.team).count())
+        self.assertRaisesMessage(common.PermissionsException, common.PermissionsException.MSG_EXISTING,
+                                 common.add_player_to_team, user=self.player1, player=self.player1, season=self.season_open, team=self.team)
+        self.assertEqual(1, common.TeamPlayerSeason.objects.filter(player=self.player1, season=self.season_open, team=self.team).count())
 
     def test_team_perm(self):
         # cannot add to a team that isn't open or active

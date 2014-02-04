@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as __
 from django.db import models
 from common.models import Stamps
 
@@ -20,7 +21,7 @@ class Game(Stamps, models.Model):
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
 
 
-class GameSchedule(Stamps, models.Model):
+class GameScheduling(Stamps, models.Model):
     ACTION_CHOICES = (
         (1, 'Proposed'),
         (2, 'Accepted'),
@@ -48,8 +49,15 @@ class GameEntry(Stamps, models.Model):
 
 
 class Location(models.Model):
-    pass
+    name = models.CharField(max_length=255)
 
 
-class Schedule(models.Model):
+class Schedule(Stamps, models.Model):
     season = models.ForeignKey('common.Season', related_name="schedules")
+
+
+class Division(Stamps, models.Model):
+    schedule = models.ForeignKey('Schedule')
+    name = models.CharField(max_length=64)
+    teams = models.ManyToManyField('common.Team')
+    rank = models.IntegerField(help_text=__('1 being the highest'))
