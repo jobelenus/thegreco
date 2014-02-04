@@ -35,7 +35,7 @@ def calculate_rating_for_player(player, rankset, total_weight=None):
     rating = 0
     for rating_id, value in ratings.iteritems():
         logger.debug('%r * (%r/%r)' % (value, weightings[rating_id], total_weight))
-        rating += value * (weightings[rating_id]/total_weight)
+        rating += value * (weightings[rating_id] / total_weight)
     logger.debug(rating)
     prc.total_rating = rating
     prc.save()
