@@ -3,11 +3,16 @@ import logging
 logger = logging.getLogger('rating')
 
 
+import common
 from rating.models import PlayerRatingComputed, PlayerRatingSelection, PlayerRanking, RankSet, Rating
 __all__ = ['PlayerRatingComputed', 'PlayerRatingSelection', 'PlayerRanking', 'RankSet', 'Rating',
            'get_ratings_for_set', 'get_rating_for_player', 'get_weight_total_for_set',
            'calculate_rating_for_player', 'get_rating_for_player', 'calculate_all_ratings',
-           'rank_players_in', 'get_ranked_players_in']
+           'rank_players_in', 'get_ranked_players_in', 'MissingException']
+
+
+class MissingException(Exception):
+    MSG_RANKING = 'There is no ranking data to use'
 
 
 def get_ratings_for_set(rankset):
@@ -64,5 +69,33 @@ def rank_players_in(rankset):
         rank += 1
 
 
-def get_ranked_players_in(rankset):
-    return PlayerRanking.objects.filter(rankset=rankset).order_by('rank')
+def get_ranked_players_in(rankset, gender=None):
+    kwargs = {'rankset': rankset}
+    if gender and (gender == common.Player.ON_FIELD_MALE or gender == common.Player.ON_FIELD_FEMALE):
+        kwargs.update({'player__gender__in': gender})
+    return PlayerRanking.objects.filter(**kwargs).order_by('rank')
+
+
+def create_teams_from(rankset, serpentine=True):
+    ranked = get_ranked_players_in(rankset)
+    if ranked.count() == 0:
+        raise MissingException(MissingException.MSG_RANKING)
+    pick_order = list(rankset.pick_order.all())
+    def add_players(ranked_players):
+        if not isinstance(ranked_players, list):
+            ranked_players = ranked_players.iterator()  # assuming queryset
+        while True:
+            for pick in pick_order:
+                team = pick.team
+                try:
+                    ranked_player = next(ranked_players)
+                except StopIteration:
+                    return
+                common.add_player_to_season(ranked_player.player, season=rankset.season)
+                common.add_player_to_team(user=ranked_player.player, player=ranked_player.player, team=team, season=rankset.season)
+            if serpentine:
+                pick_order.reverse()
+    male_players = get_ranked_players_in(rankset, gender=common.Player.ON_FIELD_MALE)
+    add_players(male_players)
+    female_players = get_ranked_players_in(rankset, gender=common.Player.ON_FIELD_FEMALE)
+    add_players(female_players)

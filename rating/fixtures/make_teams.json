@@ -1,0 +1,533 @@
+[
+    {
+        "pk": 5,
+        "model": "common.Season",
+        "fields": {
+            "is_open": "True",
+            "name": "Make Teams!",
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "rating.RankSet",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "name": "Making Teams",
+            "season": 5
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "common.team", 
+        "fields": {
+            "name": "Team1",
+            "seasons": [3],
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "common.team", 
+        "fields": {
+            "name": "Team2",
+            "seasons": [3],
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "common.team", 
+        "fields": {
+            "name": "Team3",
+            "seasons": [3],
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "rating.pickorder", 
+        "fields": {
+            "rankset": 3,
+            "rank": 1,
+            "team": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "rating.pickorder", 
+        "fields": {
+            "rankset": 3,
+            "rank": 2,
+            "team": 3,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "rating.pickorder", 
+        "fields": {
+            "rankset": 3,
+            "rank": 3,
+            "team": 4,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 1",
+            "email": "john1@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 5,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 6, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 2",
+            "email": "john2@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 6,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 7, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 3",
+            "email": "john3@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 7,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 8, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 4",
+            "email": "john4@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 8,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 9, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 5",
+            "email": "john5@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 9,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 10, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 6",
+            "email": "john6@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 10,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 11, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 7",
+            "email": "john7@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 11,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 12, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 8",
+            "email": "john8@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 12,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 13, 
+        "model": "common.player", 
+        "fields": {
+            "name": "John 9",
+            "email": "john9@doe.com",
+            "gender": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 13,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 14, 
+        "model": "common.player", 
+        "fields": {
+            "name": "Jane 1",
+            "email": "jane1@doe.com",
+            "gender": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 14,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 15, 
+        "model": "common.player", 
+        "fields": {
+            "name": "Jane 2",
+            "email": "jane2@doe.com",
+            "gender": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 15,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 16, 
+        "model": "common.player", 
+        "fields": {
+            "name": "Jane 3",
+            "email": "jane3@doe.com",
+            "gender": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 16,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 17, 
+        "model": "common.player", 
+        "fields": {
+            "name": "Jane 4",
+            "email": "jane4@doe.com",
+            "gender": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 17,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 18, 
+        "model": "common.player", 
+        "fields": {
+            "name": "Jane 5",
+            "email": "jane5@doe.com",
+            "gender": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "common.playerseasons",
+        "fields": {
+            "player": 18,
+            "season": 5,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 5,
+            "rank": 1
+        }
+    },
+    {
+        "pk": 3,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 6,
+            "rank": 2
+        }
+    },
+    {
+        "pk": 4,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 7,
+            "rank": 3
+        }
+    },
+    {
+        "pk": 5,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 8,
+            "rank": 4
+        }
+    },
+    {
+        "pk": 6,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 9,
+            "rank": 10
+        }
+    },
+    {
+        "pk": 7,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 10,
+            "rank": 11
+        }
+    },
+    {
+        "pk": 8,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 11,
+            "rank": 12
+        }
+    },
+    {
+        "pk": 9,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 12,
+            "rank": 13
+        }
+    },
+    {
+        "pk": 10,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 13,
+            "rank": 14
+        }
+    },
+    {
+        "pk": 11,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 14,
+            "rank": 5
+        }
+    },
+    {
+        "pk": 12,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 15,
+            "rank": 6
+        }
+    },
+    {
+        "pk": 13,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 16,
+            "rank": 7
+        }
+    },
+    {
+        "pk": 14,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 17,
+            "rank": 8
+        }
+    },
+    {
+        "pk": 15,
+        "model": "rating.playerranking",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 3,
+            "player": 18,
+            "rank": 9
+        }
+    }
+]

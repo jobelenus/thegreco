@@ -1,5 +1,5 @@
 from common.models import Player, Season, TeamPlayerSeason, Team, PlayerSeasons
-__all__ = ['Player', 'Season', 'TeamPlayerSeason', 'Team',
+__all__ = ['Player', 'Season', 'TeamPlayerSeason', 'Team', 'PermissionsException',
            'find_teams_for', 'all_seasons', 'all_open_seasons',
            'find_players_on', 'find_captains_on', 'add_player_to_season'
            'find_players_in_season', 'add_player_to_team', '_create_team_captain']

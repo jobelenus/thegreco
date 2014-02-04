@@ -4,12 +4,13 @@ import rating
 import decimal
 
 
-class TestCommon(TestCase):
-    fixtures = ['test']
+class TestRating(TestCase):
+    fixtures = ['test', 'make_teams']
 
     def setUp(self):
         self.rankset_empty = rating.RankSet.objects.get(id=1)
         self.rankset_calcd = rating.RankSet.objects.get(id=2)
+        self.rankset_teams = rating.RankSet.objects.get(id=3)
         self.rating1 = rating.Rating.objects.get(id=1)
         self.rating2 = rating.Rating.objects.get(id=2)
         self.rating1._calc_max()
@@ -89,3 +90,33 @@ class TestCommon(TestCase):
         self.assertEquals(self.player1, ranked_players[0].player)
         self.assertEquals(2, ranked_players[1].rank)
         self.assertEquals(self.player2, ranked_players[1].player)
+
+    def test_create_teams_from_standard(self):
+        expected_ranks = {
+            # team pick: [player ranks]
+            1: set([1, 4, 12, 5, 8]),  # pay attention to the male/female split
+            2: set([2, 10, 13, 6, 9]),
+            3: set([3, 11, 14, 7]),
+        }
+        self._test_create_teams_from(expected_ranks, False)
+
+    def test_create_teams_from_serp(self):
+        expected_ranks = {
+            # team pick: [player ranks]
+            1: set([1, 11, 12, 7, 8]),  # pay attention to the male/female split
+            2: set([2, 10, 13, 6, 9]),
+            3: set([3, 4, 14, 5, ]),
+        }
+        self._test_create_teams_from(expected_ranks, True)
+
+    def _test_create_teams_from(self, expected_ranks, serpentine):
+        rating.create_teams_from(self.rankset_teams, serpentine=serpentine)
+        pick_order = self.rankset_teams.pick_order.all()
+        for pick in pick_order:
+            team = pick.team
+            real_ranks = []
+            players = common.find_players_on(team, self.rankset_teams.season)
+            for player in players:
+                player_rank = rating.PlayerRanking.objects.get(rankset=self.rankset_teams, player=player)
+                real_ranks.append(player_rank.rank)
+            self.assertEqual(set(real_ranks), expected_ranks[pick.rank])

@@ -81,6 +81,7 @@ class PlayerRanking(Stamps, models.Model):
 
     class Meta:
         unique_together = ['rank', 'player', 'rankset']
+        ordering = ['rank']
 
     def __unicode__(self):
         return "%d: %s" % (self.rank, self.player)
@@ -95,3 +96,16 @@ class RankSet(Stamps, models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class PickOrder(Stamps, models.Model):
+    rankset = models.ForeignKey('RankSet', related_name='pick_order')
+    rank = models.IntegerField()
+    team = models.ForeignKey('common.Team')
+
+    class Meta:
+        unique_together = ['rank', 'team', 'rankset']
+        ordering = ['rank']
+
+    def __unicode__(self):
+        return "%d: %s" % (self.rank, self.team)
