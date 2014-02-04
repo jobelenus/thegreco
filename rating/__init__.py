@@ -1,5 +1,7 @@
 from rating.models import PlayerRatingComputed, PlayerRatingSelection, PlayerRanking, RankSet, Rating
 from collections import defaultdict
+import logging
+logger = logging.getLogger('rating')
 
 
 def get_ratings_for_set(rankset):
@@ -7,7 +9,7 @@ def get_ratings_for_set(rankset):
 
 
 def get_weight_total_for_set(rankset):
-    return sum([rating.weight for rating in get_ratings_for_set(rankset)])
+    return float(sum([rating.weight for rating in get_ratings_for_set(rankset)]))
 
 
 def calculate_rating_for_player(player, rankset, total_weight=None):
@@ -21,12 +23,23 @@ def calculate_rating_for_player(player, rankset, total_weight=None):
     weightings = defaultdict(int)
     for record in PlayerRatingSelection.objects.filter(player=player, rankset=rankset):
         ratings[record.rating.id] += record.selection.value
-        weightings[record.rating.id] = record.selection.ratings.weight
+        weightings[record.rating.id] = record.selection.rating.weight
+    logger.debug(ratings)
+    logger.debug(weightings)
     rating = 0
     for rating_id, value in ratings.iteritems():
+        logger.debug('%r * (%r/%r)' % (value, weightings[rating_id], total_weight))
         rating += value * (weightings[rating_id]/total_weight)
+    logger.debug(rating)
     prc.total_rating = rating
     prc.save()
+
+
+def get_rating_for_player(player, rankset):
+    try:
+        return PlayerRatingComputed.objects.get(rankset=rankset, player=player).total_rating
+    except PlayerRatingComputed.DoesNotExist:
+        return None
 
 
 def calculate_all_ratings(rankset):
@@ -37,9 +50,13 @@ def calculate_all_ratings(rankset):
 
 
 def rank_players_in(rankset):
-    rank = 1
-    PlayerRatingComputed.filter(rankset=rankset).delete()  # delete everything
+    PlayerRanking.objects.filter(rankset=rankset).delete()  # delete everything
     # TODO: improve this into a bulk insert
+    rank = 1
     for prc in PlayerRatingComputed.objects.filter(rankset=rankset).order_by('-total_rating'):
-        rank = PlayerRanking.objects.create(player=prc.player, rankset=rankset, rank=rank)
+        PlayerRanking.objects.create(player=prc.player, rankset=rankset, rank=rank)
         rank += 1
+
+
+def get_ranked_players_in(rankset):
+    return PlayerRanking.objects.filter(rankset=rankset).order_by('rank')

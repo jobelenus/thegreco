@@ -6,7 +6,7 @@
             "created_on": "2014-02-02T15:13:08.486895-05:00",
             "modified_on": "2014-02-02T15:13:08.486895-05:00",
             "name": "A Test - Empty",
-            "season": 1
+            "season": 2
         }
     },
     {
@@ -16,7 +16,7 @@
             "created_on": "2014-02-02T15:13:08.486895-05:00",
             "modified_on": "2014-02-02T15:13:08.486895-05:00",
             "name": "A Test - Full",
-            "season": 1
+            "season": 2
         }
     },
     {
@@ -109,6 +109,28 @@
             "rating": 2,
             "name": "R1 Option 3",
             "value": 3
+        }
+    },
+    {
+        "pk": 1,
+        "model": "rating.PlayerRatingComputed",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 2,
+            "player": 1,
+            "total_rating": 3
+        }
+    },
+    {
+        "pk": 2,
+        "model": "rating.PlayerRatingComputed",
+        "fields": {
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00",
+            "rankset": 2,
+            "player": 2,
+            "total_rating": 2
         }
     }
 ]

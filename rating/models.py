@@ -57,7 +57,7 @@ class PlayerRatingManager(models.Manager):
 
 class PlayerRatingSelection(Stamps, models.Model):
     player = models.ForeignKey('common.Player', related_name="ratings_chosen")
-    ranksets = models.ForeignKey('RankSet')
+    rankset = models.ForeignKey('RankSet')
     rating = models.ForeignKey('Rating')
     selection = models.ForeignKey('RatingOption')
 
@@ -70,8 +70,8 @@ class PlayerRatingSelection(Stamps, models.Model):
 
 class PlayerRatingComputed(Stamps, models.Model):
     player = models.ForeignKey('common.Player', related_name="ratings_computed")
-    ranksets = models.ForeignKey('RankSet')
-    total_rating = models.IntegerField(editable=False)
+    rankset = models.ForeignKey('RankSet')
+    total_rating = models.DecimalField(editable=False, decimal_places=4, max_digits=10)
 
 
 class PlayerRanking(Stamps, models.Model):
