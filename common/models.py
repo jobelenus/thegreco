@@ -1,10 +1,8 @@
 from django.utils.translation import ugettext_lazy as __
-from django.contrib.contenttypes import generic
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.utils import formats
-from django.db.models.signals import m2m_changed, post_save
+from django.db.models.signals import post_save
 
 
 # Abstract models
