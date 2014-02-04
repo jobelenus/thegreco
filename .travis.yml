@@ -13,4 +13,4 @@ before_script:
   - mysql -e 'create database thegreco;'
   - python manage.py syncdb --noinput
 script:
-  - python manage.py test
+  - python manage.py test common rating
