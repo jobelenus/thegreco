@@ -1,5 +1,5 @@
 from schedule.models import Game, GameScheduling, GameEntry, Schedule, Location, SchedulePreference, \
-                            PlayerSchedulePreferenceSeason, TeamSchedulePreferenceSeason
+    PlayerSchedulePreferenceSeason, TeamSchedulePreferenceSeason
 __all__ = ['Game', 'GameScheduling', 'GameEntry', 'Schedule', 'Location',
            'SchedulePreference', 'PlayerSchedulePreferenceSeason', 'TeamSchedulePreferenceSeason',
            'create_round_robin']

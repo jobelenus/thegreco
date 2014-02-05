@@ -1,7 +1,6 @@
 from django.db.models import Count
 from collections import defaultdict
 import logging
-import operator
 logger = logging.getLogger('rating')
 
 
@@ -90,12 +89,14 @@ def get_ranked_players_in(rankset, gender=None, schedule_option=None, exclude=[]
     exclude_kwargs = {}
     if exclude:
         for schedule_selection in exclude:
-            exclude_kwargs.update({'player__schedule_preference_selections__selection': schedule_selection, 'player__schedule_preference_selections__season': rankset.season})
+            exclude_kwargs.update({'player__schedule_preference_selections__selection': schedule_selection,
+                                   'player__schedule_preference_selections__season': rankset.season})
     return PlayerRanking.objects.filter(**kwargs).exclude(**exclude_kwargs).order_by('rank')
 
 
 def create_teams_from(rankset, serpentine=True):
-    import common, schedule
+    import common
+    import schedule
     # TODO weave baggage prefs into team creation
     ranked = get_ranked_players_in(rankset)
     if ranked.count() == 0:
@@ -126,12 +127,14 @@ def create_teams_from(rankset, serpentine=True):
         # orders the day by the lowest number of folks in attendence
         # add players by rank in that order
         schedule.enforce_schedule_preference_for_players(rankset.season)
-        option_breakdown = schedule.PlayerSchedulePreferenceSeason.objects.filter(season=rankset.season).values('selection').annotate(num_players=Count('player'))
+        option_breakdown = schedule.PlayerSchedulePreferenceSeason.objects.filter(season=rankset.season). \
+            values('selection').annotate(num_players=Count('player'))
         sorted_breakdown = sorted(option_breakdown, key=lambda row: row['num_players'])
         past_selections = []
         for row in sorted_breakdown:
             selection = schedule.models.SchedulePreferenceOption.objects.get(id=row['selection'])
-            pick_order = list(rankset.pick_order.filter(team__team_schedule_preferences__season=rankset.season, team__team_schedule_preferences__selection=selection))
+            pick_order = list(rankset.pick_order.filter(team__team_schedule_preferences__season=rankset.season,
+                                                        team__team_schedule_preferences__selection=selection))
             male_players = get_ranked_players_in(rankset, gender=common.Player.ON_FIELD_MALE, schedule_option=selection, exclude=past_selections)
             add_players(male_players, pick_order)
             female_players = get_ranked_players_in(rankset, gender=common.Player.ON_FIELD_FEMALE, schedule_option=selection, exclude=past_selections)

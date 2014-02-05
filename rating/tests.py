@@ -129,7 +129,7 @@ class TestRating(TestCase):
         self.rankset_teams.season.schedule_preference = self.preference
         self.rankset_teams.season.save()
         # player 18f, 14f, 9m, 8m, 6m are pref2
-        # that is rank: 9, 5, 10, 4, 2 
+        # that is rank: 9, 5, 10, 4, 2
         # team 3 is pref2
         expected_ranks = {
             # team pick: [player ranks]
@@ -144,7 +144,7 @@ class TestRating(TestCase):
         self.rankset_teams.season.schedule_preference = self.preference
         self.rankset_teams.season.save()
         # player 18f, 14f, 9m, 8m, 6m are pref2
-        # that is rank: 9, 5, 10, 4, 2 
+        # that is rank: 9, 5, 10, 4, 2
         # team 3 is pref2
         expected_ranks = {
             # team pick: [player ranks]
