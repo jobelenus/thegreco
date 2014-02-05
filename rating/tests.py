@@ -1,6 +1,7 @@
 from django.test import TestCase
 import common
 import rating
+import schedule
 import decimal
 
 
@@ -17,6 +18,7 @@ class TestRating(TestCase):
         self.rating2._calc_max()
         self.player1 = common.Player.objects.get(id=1)
         self.player2 = common.Player.objects.get(id=2)
+        self.preference = schedule.SchedulePreference.objects.get(id=1)
 
     def tearDown(self):
         pass
@@ -119,7 +121,35 @@ class TestRating(TestCase):
             for player in players:
                 player_rank = rating.PlayerRanking.objects.get(rankset=self.rankset_teams, player=player)
                 real_ranks.append(player_rank.rank)
+            #print set(real_ranks), expected_ranks[pick.rank]
             self.assertEqual(set(real_ranks), expected_ranks[pick.rank])
 
-    def test_create_schedule_pref_teams(self):
-        pass
+    def test_create_schedule_pref_teams_serp(self):
+        # apply the preference to the season, rest of the data is already in place
+        self.rankset_teams.season.schedule_preference = self.preference
+        self.rankset_teams.season.save()
+        # player 18f, 14f, 9m, 8m, 6m are pref2
+        # that is rank: 9, 5, 10, 4, 2 
+        # team 3 is pref2
+        expected_ranks = {
+            # team pick: [player ranks]
+            1: set([1, 12, 13, 7, 8]),  # pay attention to the male/female split
+            2: set([3, 11, 14, 6]),
+            3: set([2, 4, 10, 5, 9]),
+        }
+        self._test_create_teams_from(expected_ranks, True)
+
+    def test_create_schedule_pref_teams_standard(self):
+        # apply the preference to the season, rest of the data is already in place
+        self.rankset_teams.season.schedule_preference = self.preference
+        self.rankset_teams.season.save()
+        # player 18f, 14f, 9m, 8m, 6m are pref2
+        # that is rank: 9, 5, 10, 4, 2 
+        # team 3 is pref2
+        expected_ranks = {
+            # team pick: [player ranks]
+            1: set([1, 11, 13, 6, 8]),  # pay attention to the male/female split
+            2: set([3, 12, 14, 7]),
+            3: set([2, 4, 10, 5, 9]),
+        }
+        self._test_create_teams_from(expected_ranks, False)

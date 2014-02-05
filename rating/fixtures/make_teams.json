@@ -1,7 +1,7 @@
 [
     {
         "pk": 5,
-        "model": "common.Season",
+        "model": "common.season",
         "fields": {
             "is_open": "True",
             "name": "Make Teams!",
@@ -11,7 +11,7 @@
     },
     {
         "pk": 3,
-        "model": "rating.RankSet",
+        "model": "rating.rankset",
         "fields": {
             "created_on": "2014-02-02T15:13:08.486895-05:00",
             "modified_on": "2014-02-02T15:13:08.486895-05:00",
@@ -528,6 +528,242 @@
             "rankset": 3,
             "player": 18,
             "rank": 9
+        }
+    },
+    {
+        "pk": 1,
+        "model": "schedule.schedulepreference",
+        "fields": {
+            "name": "Days",
+            "description": "What Day Do You Want To Play?",
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "schedule.schedulepreferenceoption",
+        "fields": {
+            "preference": 1,
+            "name": "Monday",
+            "value": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "schedule.schedulepreferenceoption",
+        "fields": {
+            "preference": 1,
+            "name": "Wednesday",
+            "value": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "schedule.teamschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "team": 2,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "schedule.teamschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "team": 3,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "schedule.teamschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "team": 4,
+            "preference": 1,
+            "selection": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 5,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 6,
+            "preference": 1,
+            "selection": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 7,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 8,
+            "preference": 1,
+            "selection": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 9,
+            "preference": 1,
+            "selection": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 10,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 11,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 12,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 13,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 14,
+            "preference": 1,
+            "selection": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 15,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 16,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 17,
+            "preference": 1,
+            "selection": 1,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "schedule.playerschedulepreferenceseason",
+        "fields": {
+            "season": 5,
+            "player": 18,
+            "preference": 1,
+            "selection": 2,
+            "created_on": "2014-02-02T15:13:08.486895-05:00",
+            "modified_on": "2014-02-02T15:13:08.486895-05:00"
         }
     }
 ]

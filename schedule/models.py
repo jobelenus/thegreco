@@ -82,9 +82,9 @@ class PlayerSchedulePreferenceSeason(Stamps, models.Model):
 
 
 class TeamSchedulePreferenceSeason(Stamps, models.Model):
-    team = models.ForeignKey('common.Team')
+    team = models.ForeignKey('common.Team', related_name="team_schedule_preferences")
     season = models.ForeignKey('common.Season')
-    preference = models.ForeignKey('SchedulePreference', related_name="team_schedule_preferences")
+    preference = models.ForeignKey('SchedulePreference')
     selection = models.ForeignKey('SchedulePreferenceOption')
 
     class Meta:
