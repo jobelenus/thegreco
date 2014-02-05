@@ -104,6 +104,14 @@ def find_players_in_season(season):
     return season.players.all()
 
 
+def find_players_not_on_teams_in_season(season):
+    # TODO: refactor to use values_list flat=True for speed/memory
+    season_players = set([player.id for player in season.players.all()])
+    players_on_teams = set([tp.player.id for tp in TeamPlayerSeason.objects.filter(season=season)])
+    player_ids_not_on_teams = season_players - players_on_teams
+    return Player.objects.filter(id__in=player_ids_not_on_teams)
+
+
 @enforce_kwargs
 @gender_rules(PermissionsException.MSG_ELIGIBLE)
 @captain_or_self_or_superuser(PermissionsException.MSG_CAPTAIN_ADD)
