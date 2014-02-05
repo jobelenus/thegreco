@@ -120,3 +120,6 @@ class TestRating(TestCase):
                 player_rank = rating.PlayerRanking.objects.get(rankset=self.rankset_teams, player=player)
                 real_ranks.append(player_rank.rank)
             self.assertEqual(set(real_ranks), expected_ranks[pick.rank])
+
+    def test_create_schedule_pref_teams(self):
+        pass

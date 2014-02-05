@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.utils import formats
 from django.db.models.signals import post_save
+import datetime
 
 
 # Abstract models
@@ -112,6 +113,29 @@ class Player(Stamps, AbstractBaseUser):
         return True if self.season_teams.filter(season=season, team=team, is_captain=True).count() > 0 else False
 
 
+class ValidBaggageManager(models.Manager):
+
+    def get_query_set(self):
+        return super(ValidBaggageManager, self).get_query_set().filter(invalidated=False)
+
+
+class BaggageEntry(Stamps, models.Model):
+    season = models.ForeignKey('Season')
+    player = models.ForeignKey('Player', related_name="my_baggage")
+    baggage = models.ForeignKey('Player')
+    invalidated = models.BooleanField(default=False)
+    invalidated_on = models.DateTimeField(blank=True, null=True)
+
+    objects = models.Manager()
+    valid = ValidBaggageManager()
+
+    def mark_invalid(self, timestamp=None):
+        if not timestamp:
+            timestamp = datetime.datetime.now()
+        self.invalidated = True
+        self.invalidated_on = timestamp
+
+
 class PlayerSeasons(Stamps, models.Model):
     """
     Through model for created timestamp, ordering for waitlist
@@ -152,6 +176,8 @@ class Season(Stamps, models.Model):
     signup_cap = models.PositiveIntegerField(help_text=__('Everyone after this # is on the waitlist'),
                                              null=True, blank=True)
     gender_rule = models.IntegerField(choices=GENDER_RULES, default=1)
+    baggage_limit = models.IntegerField(help_text=__('How many players you are allowed to bag'), null=True, blank=True)
+    schedule_preference = models.ForeignKey('schedule.SchedulePreference', blank=True, null=True)
 
     objects = ShownManager()
     active = ActiveManager()

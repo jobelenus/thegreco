@@ -85,3 +85,6 @@ class TestCommon(TestCase):
         common.add_player_to_team(user=self.player2, player=self.player2, season=self.season_open, team=self.team, is_captain=True)
         self.assertRaisesMessage(common.PermissionsException, common.PermissionsException.MSG_SEASON,
                                  common.add_player_to_team, user=self.player2, player=self.no_season_player, season=self.season_open, team=self.team)
+
+    def test_baggage(self):
+        pass

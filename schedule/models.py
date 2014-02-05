@@ -61,3 +61,32 @@ class Division(Stamps, models.Model):
     name = models.CharField(max_length=64)
     teams = models.ManyToManyField('common.Team')
     rank = models.IntegerField(help_text=__('1 being the highest'))
+
+
+class SchedulePreference(Stamps, models.Model):
+    name = models.CharField(max_length=64)
+    description = models.TextField()
+
+
+class SchedulePreferenceOption(Stamps, models.Model):
+    preference = models.ForeignKey('SchedulePreference', related_name="options")
+    name = models.CharField(max_length=64)
+    value = models.CharField(max_length=64)
+
+
+class PlayerSchedulePreferenceSeason(Stamps, models.Model):
+    player = models.ForeignKey('common.Player', related_name="schedule_preference_selections")
+    season = models.ForeignKey('common.Season')
+    preference = models.ForeignKey('SchedulePreference', related_name="player_schedule_preferences")
+    selection = models.ForeignKey('SchedulePreferenceOption')
+
+
+class TeamSchedulePreferenceSeason(Stamps, models.Model):
+    team = models.ForeignKey('common.Team')
+    season = models.ForeignKey('common.Season')
+    preference = models.ForeignKey('SchedulePreference', related_name="team_schedule_preferences")
+    selection = models.ForeignKey('SchedulePreferenceOption')
+
+    class Meta:
+        # a team can only have one schedule time
+        unique_together = ['team', 'season', 'preference']

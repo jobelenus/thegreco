@@ -1,4 +1,4 @@
-from common.models import Player, Season, TeamPlayerSeason, Team, PlayerSeasons
+from common.models import Player, Season, TeamPlayerSeason, Team, PlayerSeasons, BaggageEntry
 __all__ = ['Player', 'Season', 'TeamPlayerSeason', 'Team', 'PermissionsException',
            'find_teams_for', 'all_seasons', 'all_open_seasons',
            'find_players_on', 'find_captains_on', 'add_player_to_season'
@@ -128,3 +128,25 @@ def remove_player_from_team(user=None, player=None, team=None, season=None):
 
 def _create_team_captain(user, team, season):
     add_player_to_team(user=user, player=user, team=team, season=season, is_captain=True)
+
+
+def enforce_baggage(player, season):
+    bagged_entries = BaggageEntry.valid.filter(season=season, player=player)
+    bagged_players = [entry.baggage for entry in bagged_entries]
+    all_entries = []
+    all_entries += bagged_entries
+    bag_sets = {
+        player.id: set([p.id for p in bagged_players])
+    }
+    for _player in bagged_players:
+        _bagged_entries = BaggageEntry.valid.filter(season=season, player=_player)
+        all_entries += _bagged_entries
+        bag_sets.update({_player.id: set([entry.baggage for entry in _bagged_entries])})
+    valid = True
+    the_set = bag_sets.values().pop()
+    for a_set in bag_sets.values():
+        if the_set != a_set:
+            valid = False
+            break
+    if valid is False:
+        [entry.mark_invalid() for entry in all_entries]
