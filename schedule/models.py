@@ -4,20 +4,25 @@ from common.models import Stamps
 
 
 class Game(Stamps, models.Model):
+    STATUS_PENDING = 1
+    STATUS_SCHEDULED = 2
+    STATUS_CANCELLED = 3
+    STATUS_PLAYED = 4
+    STATUS_FOREFEIT = 5
     STATUS_CHOICES = (
-        (1, 'Pending'),
-        (2, 'Scheduled'),
-        (3, 'Canceled'),
-        (4, 'Played'),
-        (5, 'Forefeit')
+        (STATUS_PENDING, 'Pending'),
+        (STATUS_SCHEDULED, 'Scheduled'),
+        (STATUS_CANCELLED, 'Canceled'),
+        (STATUS_PLAYED, 'Played'),
+        (STATUS_FOREFEIT, 'Forefeit')
     )
     schedule = models.ForeignKey('Schedule')
-    location = models.ForeignKey('Location', related_name="games")
-    time = models.DateTimeField()
+    location = models.ForeignKey('Location', related_name="games", blank=True, null=True)
+    time = models.DateTimeField(null=True, blank=True)
     home_team = models.ForeignKey('common.Team', related_name="home_games")
     away_team = models.ForeignKey('common.Team', related_name="away_games")
-    home_score = models.IntegerField()
-    away_score = models.IntegerField()
+    home_score = models.IntegerField(default=0)
+    away_score = models.IntegerField(default=0)
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
 
 
@@ -53,14 +58,15 @@ class Location(models.Model):
 
 
 class Schedule(Stamps, models.Model):
+    name = models.CharField(max_length=64)
     season = models.ForeignKey('common.Season', related_name="schedules")
 
 
 class Division(Stamps, models.Model):
-    schedule = models.ForeignKey('Schedule')
+    schedule = models.ForeignKey('Schedule', related_name="divisions")
     name = models.CharField(max_length=64)
     teams = models.ManyToManyField('common.Team')
-    rank = models.IntegerField(help_text=__('1 being the highest'))
+    rank = models.IntegerField(help_text=__('1 being the highest'), default=1)
 
 
 class SchedulePreference(Stamps, models.Model):
