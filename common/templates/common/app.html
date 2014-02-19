@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <title>The Greco</title>
+    <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap.css" %}">
+    <script type="text/javascript" src="{% static "lib/angular/angular.js" %}"></script>
+    <script type="text/javascript" src="{% static "lib/angular/angular-resource.js" %}"></script>
+    <script type="text/javascript" src="{% static "lib/angular/angular-django-rest-resource.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/app/app.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/app/services.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/app/controller.js" %}"></script>
+    <style type="text/css">
+        .players, .teams, .seasons {
+            width: 33%;
+            float: left;
+        }
+    </style>
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+{% verbatim %}
+    <section class="panel players panel-body" ng-controller="PlayerController">
+        <h3 class="panel-header">Players</h3>
+        <ul class="list-unstyled">
+            <li class="well" ng-repeat="player in players">
+                {{ player.name }}
+            </li>
+        </ul>
+    </section>
+    <section class="panel teams panel-body" ng-controller="TeamController">
+        <h3 class="panel-header">Teams</h3>
+        <ul class="list-unstyled">
+            <li class="well" ng-repeat="team in teams">
+                {{ team.name }}
+            </li>
+        </ul>
+    </section>
+    <section class="panel seasons panel-body" ng-controller="SeasonController">
+        <h3 class="panel-header">Seasons</h3>
+        <ul class="list-unstyled">
+            <li class="well" ng-repeat="season in seasons">
+                {{ season.name }}
+            </li>
+        </ul>
+    </section>
+{% endverbatim %}
+</body>
+</html>
