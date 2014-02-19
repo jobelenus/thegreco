@@ -90,6 +90,7 @@ class Player(Stamps, AbstractBaseUser):
     def playing_as_male(self):
         return True if self.gender in Player.ON_FIELD_MALE else False
 
+    @property
     def playing_as_female(self):
         return True if self.gender in Player.ON_FIELD_FEMALE else False
 
