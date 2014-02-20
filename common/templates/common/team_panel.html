@@ -2,5 +2,5 @@
 {% block panel-class %}team{% endblock %}
 {% block panel-title %}Teams{% endblock %}
 {% block controller %}TeamController{% endblock %}
-{% block repeat %}team in teams{% endblock %}
+{% block repeat %}team in teams | filter:query{% endblock %}
 {% block repeat-content%}{% verbatim %}{{team.name}}{% endverbatim %}{% endblock %}

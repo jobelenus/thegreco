@@ -1,13 +1,9 @@
     <section class="{% block panel-class %}{% endblock %} panel panel-default col-md-4" ng-controller="{% block controller %}{% endblock %}">
         <div class="panel-header">
             <h3 class="panel-title">{% block panel-title %}{% endblock %}</h3>
-            <div class="input-group input-group-sm">
-                <input type="text" name="search" class="form-control search-query">
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-search btn-primary">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
+            <div class="right-inner-addon">
+                <i class="glyphicon glyphicon-search"></i>
+                <input type="text" name="search" class="form-control search-query" ng-model="query">
             </div>
         </div>
         <div class="panel-body">

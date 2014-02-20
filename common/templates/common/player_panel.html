@@ -2,5 +2,5 @@
 {% block panel-class %}player{% endblock %}
 {% block panel-title %}Players{% endblock %}
 {% block controller %}PlayerController{% endblock %}
-{% block repeat %}player in players{% endblock %}
+{% block repeat %}player in players | filter:query{% endblock %}
 {% block repeat-content%}{% verbatim %}{{player.name}}{% endverbatim %}{% endblock %}
