@@ -1,0 +1,20 @@
+    <section class="{% block panel-class %}{% endblock %} panel panel-default col-md-4" ng-controller="{% block controller %}{% endblock %}">
+        <div class="panel-header">
+            <h3 class="panel-title">{% block panel-title %}{% endblock %}</h3>
+            <div class="input-group input-group-sm">
+                <input type="text" name="search" class="form-control search-query">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-search btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li class="well" ng-repeat="{% block repeat %}{% endblock %}">
+                    {% block repeat-content %}{% endblock %}
+                </li>
+            </ul>
+        </div>
+    </section>

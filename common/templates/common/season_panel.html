@@ -1,0 +1,6 @@
+{% extends "common/app_panel.html" %}
+{% block panel-class %}season{% endblock %}
+{% block panel-title %}Seasons{% endblock %}
+{% block controller %}SeasonController{% endblock %}
+{% block repeat %}season in seasons{% endblock %}
+{% block repeat-content%}{% verbatim %}{{season.name}}{% endverbatim %}{% endblock %}
