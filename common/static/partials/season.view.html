@@ -1,6 +1,5 @@
-    <section class="{% block panel-class %}{% endblock %} panel panel-default col-md-4" ng-view="{% block view %}{% endblock %}">
         <div class="panel-header">
-            <h3 class="panel-title">{% block panel-title %}{% endblock %}</h3>
+            <h3 class="panel-title">Seasons</h3>
             <div class="right-inner-addon">
                 <i class="glyphicon glyphicon-search"></i>
                 <input type="text" name="search" class="form-control search-query" ng-model="query">
@@ -8,9 +7,8 @@
         </div>
         <div class="panel-body">
             <ul class="list-unstyled">
-                <li class="well" ng-repeat="{% block repeat %}{% endblock %}">
-                    {% block repeat-content %}{% endblock %}
+                <li class="well" ng-repeat="season in seasons | filter:query">
+                    <a ui-sref="season.chosen({seasonId:season.id})">{{season.name}}</a>
                 </li>
             </ul>
         </div>
-    </section>

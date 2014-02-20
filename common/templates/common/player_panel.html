@@ -1,6 +1,6 @@
 {% extends "common/app_panel.html" %}
 {% block panel-class %}player{% endblock %}
 {% block panel-title %}Players{% endblock %}
-{% block controller %}PlayerController{% endblock %}
+{% block view %}player{% endblock %}
 {% block repeat %}player in players | filter:query{% endblock %}
 {% block repeat-content%}{% verbatim %}{{player.name}}{% endverbatim %}{% endblock %}

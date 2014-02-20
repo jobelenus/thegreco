@@ -1,6 +1,8 @@
 {% extends "common/app_panel.html" %}
 {% block panel-class %}team{% endblock %}
 {% block panel-title %}Teams{% endblock %}
-{% block controller %}TeamController{% endblock %}
+{% block view %}team{% endblock %}
 {% block repeat %}team in teams | filter:query{% endblock %}
-{% block repeat-content%}{% verbatim %}{{team.name}}{% endverbatim %}{% endblock %}
+{% block repeat-content%}{% verbatim %}
+<a ui-sref="team_chosen({teamId:team.id})">{{team.name}}</a>
+{% endverbatim %}{% endblock %}

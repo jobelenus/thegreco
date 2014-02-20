@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap.css" %}">
     <script type="text/javascript" src="{% static "lib/angular/angular.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular-resource.js" %}"></script>
+    <script type="text/javascript" src="{% static "lib/angular/angular-ui-router.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular-django-rest-resource.js" %}"></script>
     <script type="text/javascript" src="{% static "js/app/app.js" %}"></script>
     <script type="text/javascript" src="{% static "js/app/services.js" %}"></script>
@@ -28,9 +29,9 @@
 </head>
 <body class="container-fluid">
 <div class="row">
-    {% include "common/player_panel.html" %}
-    {% include "common/team_panel.html" %}
-    {% include "common/season_panel.html" %}
+    <section class="team panel panel-default col-md-4" ui-view="season"></section>
+    <section class="team panel panel-default col-md-4" ui-view="team"></section>
+    <section class="team panel panel-default col-md-4" ui-view="player"></section>
 </div>
 </body>
 </html>
