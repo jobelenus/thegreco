@@ -1,23 +1,5 @@
 var controllers = angular.module('appControllers', []);
 
-var state_machine = function($scope, $state, season_id, team_id, player_id) {
-    if(player_id && !team_id && !season_id) {
-        $state.go('player_chosen', {player_id: player_id});
-    } else if(season_id && !team_id && !player_id) {
-        $state.go('season_chosen', {season_id: season_id});
-    } else if(team_id && !season_id && !player_id) {
-        $state.go('team_chosen', {team_id: team_id});
-    } else if(player_id && team_id) {
-        $state.go('player_team_chosen', {player_id: player_id, team_id: team_id});
-    } else if(season_id && team_id) {
-        $state.go('season_team_chosen', {season_id: season_id, team_id: team_id});
-    } else if(player_id && season_id) {
-        $state.go('season_player_chosen', {player_id: player_id, season_id: season_id});
-    } else {
-        $state.go('home');
-    }
-};
-
 controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', function($scope, Team, Player, $state) {
     $scope.selected_id = 0;
     if($state.params.team_id) {
@@ -28,7 +10,7 @@ controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', 
             $scope.selected_id = 0;
             team_id = 0;
         }
-        state_machine($scope, $state, $state.params.season_id, team_id, $state.params.player_id);
+        $scope.state_machine($scope, $state, $state.params.season_id, team_id, $state.params.player_id);
     };
     $scope._teams = Team.query({}, function() {
         $scope.teams = $scope._teams.filter(function(team) {
@@ -71,7 +53,7 @@ controllers.controller('SeasonController', ['$scope', 'Season', 'Player', '$stat
             $scope.selected_id = 0;
             season_id = 0;
         }
-        state_machine($scope, $state, season_id, $state.params.team_id, $state.params.player_id);
+        $scope.state_machine($scope, $state, season_id, $state.params.team_id, $state.params.player_id);
     };
     $scope._seasons = Season.query({}, function() {
         $scope.seasons = $scope._seasons.filter(function(season) {
@@ -114,7 +96,7 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
             $scope.selected_id = 0;
             player_id = 0;
         }
-        state_machine($scope, $state, $state.params.season_id, $state.params.team_id, player_id);
+        $scope.state_machine($scope, $state, $state.params.season_id, $state.params.team_id, player_id);
     };
     $scope._players = Player.query({}, function() {
         $scope.players = $scope._players.filter(function(player) {
