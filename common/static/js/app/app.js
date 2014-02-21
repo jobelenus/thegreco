@@ -5,12 +5,9 @@ var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).
     $rootScope.$on('$stateChangeStart', function() {
         $('nav .nav .spinner').css('display','block');
     });
-    $rootScope.$on('$stateChangeSuccess', function() {
+    $rootScope.$on('$viewContentLoaded', function() {
+        // is run N times b/c N controllers fire it
         $('nav .nav .spinner').css('display','none');
-    });
-    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-        $('nav .nav .spinner').css('display','none');
-        alert('Error: ' + error);
     });
 }]);
 
