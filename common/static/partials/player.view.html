@@ -12,11 +12,9 @@
                 </div>
             </div>
         </div>
-        <div class="panel-body">
-            <ul class="list-unstyled list-group">
-                <li class="list-group-item" ng-class="{ 'list-group-item-success': player.id == selected.id }" ng-repeat="player in players | filter:query">
-                    <a ng-click="choose(player.id)">{{player.name}}</a>
-                </li>
-            </ul>
-        </div>
+        <ul class="list-unstyled list-group">
+            <li class="list-group-item" ng-class="{ 'list-group-item-success': player.id == selected.id }" ng-repeat="player in players | filter:query">
+                <a ng-click="choose(player.id)">{{player.name}}</a>
+            </li>
+        </ul>
     </div>
