@@ -1,5 +1,23 @@
 var controllers = angular.module('appControllers', []);
 
+var state_machine = function($scope, $state, season_id, team_id, player_id) {
+    if(player_id && !team_id && !season_id) {
+        $state.go('player_chosen', {player_id: player_id});
+    } else if(season_id && !team_id && !player_id) {
+        $state.go('season_chosen', {season_id: season_id});
+    } else if(team_id && !season_id && !player_id) {
+        $state.go('team_chosen', {team_id: team_id});
+    } else if(player_id && team_id) {
+        $state.go('player_team_chosen', {player_id: player_id, team_id: team_id});
+    } else if(season_id && team_id) {
+        $state.go('season_team_chosen', {season_id: season_id, team_id: team_id});
+    } else if(player_id && season_id) {
+        $state.go('season_player_chosen', {player_id: player_id, season_id: season_id});
+    } else {
+        $state.go('home');
+    }
+};
+
 controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', function($scope, Team, Player, $state) {
     $scope.selected_id = 0;
     if($state.params.team_id) {
@@ -8,22 +26,9 @@ controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', 
     $scope.choose = function(team_id) {
         if($scope.selected_id == team_id) {
             $scope.selected_id = 0;
-            if($state.params.player_id) {
-                $state.go('player_chosen', {player_id: $state.params.player_id});
-            } else if($state.params.season_id) {
-                $state.go('season_chosen', {season_id: $state.params.season_id});
-            } else {
-                $state.go('home');
-            }
-        } else {
-            if($state.params.player_id) {
-                $state.go('player_team_chosen', {player_id: $state.params.player_id, team_id: team_id});
-            } else if($state.params.season_id) {
-                $state.go('season_team_chosen', {season_id: $state.params.season_id, team_id: team_id});
-            } else {
-                $state.go('team_chosen', {team_id: team_id});
-            }
+            team_id = 0;
         }
+        state_machine($scope, $state, $state.params.season_id, team_id, $state.params.player_id);
     };
     $scope._teams = Team.query({}, function() {
         $scope.teams = $scope._teams.filter(function(team) {
@@ -64,35 +69,30 @@ controllers.controller('SeasonController', ['$scope', 'Season', 'Player', '$stat
     $scope.choose = function(season_id) {
         if($scope.selected_id == season_id) {
             $scope.selected_id = 0;
-            if($state.params.player_id) {
-                $state.go('player_chosen', {player_id: $state.params.player_id});
-            } else if($state.params.team_id) {
-                $state.go('team_chosen', {team_id: $state.params.team_id});
-            } else {
-                $state.go('home');
-            }
-        } else {
-            if($state.params.player_id) {
-                $state.go('season_player_chosen', {player_id: $state.params.player_id, season_id: season_id});
-            } else if($state.params.team_id) {
-                $state.go('season_team_chosen', {team_id: $state.params.team_id, season_id: season_id});
-            } else {
-                $state.go('season_chosen', {season_id: season_id});
-            }
+            season_id = 0;
         }
+        state_machine($scope, $state, season_id, $state.params.team_id, $state.params.player_id);
     };
     $scope._seasons = Season.query({}, function() {
         $scope.seasons = $scope._seasons.filter(function(season) {
             if($state.params.team_id) {
                 for(var i in season.teams) {
                     if(season.teams[i].id == $state.params.team_id) {
-                        return season;
+                        if($state.params.player_id) {
+                            for(var j in season.players) {
+                                if($state.params.player_id == season.players[j]) {
+                                    return season;
+                                }
+                            }
+                        } else {
+                            return season;
+                        }
                     }
                 }
                 return null;
             } else if($state.params.player_id) {
-                for(var j in season.players) {
-                    if($state.params.player_id == season.players[j]) {
+                for(var k in season.players) {
+                    if($state.params.player_id == season.players[k]) {
                         return season;
                     }
                 }
@@ -112,22 +112,9 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
     $scope.choose = function(player_id) {
         if($scope.selected_id == player_id) {
             $scope.selected_id = 0;
-            if($state.params.team_id) {
-                $state.go('team_chosen', {team_id: $state.params.team_id});
-            } else if($state.params.season_id) {
-                $state.go('season_chosen', {season_id: $state.params.season_id});
-            } else {
-                $state.go('home');
-            }
-        } else {
-            if($state.params.team_id) {
-                $state.go('player_team_chosen', {team_id: $state.params.team_id, player_id: player_id});
-            } else if($state.params.season_id) {
-                $state.go('season_player_chosen', {season_id: $state.params.season_id, player_id: player_id});
-            } else {
-                $state.go('player_chosen', {player_id: player_id});
-            }
+            player_id = 0;
         }
+        state_machine($scope, $state, $state.params.season_id, $state.params.team_id, player_id);
     };
     $scope._players = Player.query({}, function() {
         $scope.players = $scope._players.filter(function(player) {
