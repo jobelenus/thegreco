@@ -15,6 +15,7 @@
         <ul class="list-unstyled list-group">
             <li class="list-group-item" ng-class="{ 'list-group-item-success': player.id == selected.id }" ng-repeat="player in players | filter:query">
                 <a ng-click="choose(player.id)">{{player.name}}</a>
+                <a href="{{player.admin_edit_url}}" target="_blank" class="pull-right glyphicon glyphicon-share-alt">&nbsp;</a>
             </li>
         </ul>
     </div>

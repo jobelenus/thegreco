@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import TemplateView
 
 from common import rest as common_rest
@@ -13,7 +14,7 @@ urlpatterns = patterns(
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^app/$', TemplateView.as_view(template_name='common/app.html'), name="app"),
+    url(r'^app/$', staff_member_required(TemplateView.as_view(template_name='common/app.html')), name="app"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^rest/common/', include(common_rest.router.urls))
 )
