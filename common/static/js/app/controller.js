@@ -12,34 +12,40 @@ controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', 
         }
         $scope.state_machine($scope, $state, $state.params.season_id, team_id, $state.params.player_id);
     };
-    $scope._teams = Team.query({}, function() {
-        $scope.teams = $scope._teams.filter(function(team) {
-            if($state.params.season_id) {
-                for(var i in team.seasons) {
-                    if(team.seasons[i] == $state.params.season_id) {
-                        if($state.params.player_id) {
-                            for(var j in team.season_players) {
-                                if($state.params.player_id == team.season_players[j].player) {
-                                    return team;
+    
+    var set = function() {
+        $scope._teams = Team.query({}, function() {
+            $scope.teams = $scope._teams.filter(function(team) {
+                if($state.params.season_id) {
+                    for(var i in team.seasons) {
+                        if(team.seasons[i] == $state.params.season_id) {
+                            if($state.params.player_id) {
+                                for(var j in team.season_players) {
+                                    if($state.params.player_id == team.season_players[j].player) {
+                                        return team;
+                                    }
                                 }
+                            } else {
+                                return team;
                             }
-                        } else {
+                        }
+                    }
+                    return null;
+                } else if($state.params.player_id) {
+                    for(var k in team.season_players) {
+                        if($state.params.player_id == team.season_players[k].player) {
                             return team;
                         }
                     }
+                    return null;
+                } else {
+                    return team;
                 }
-                return null;
-            } else if($state.params.player_id) {
-                for(var k in team.season_players) {
-                    if($state.params.player_id == team.season_players[k].player) {
-                        return team;
-                    }
-                }
-                return null;
-            } else {
-                return team;
-            }
+            });
         });
+    };
+    $scope.$on('$stateChangeSuccess', function() {
+        set();
     });
 }]);
 
@@ -55,34 +61,39 @@ controllers.controller('SeasonController', ['$scope', 'Season', 'Player', '$stat
         }
         $scope.state_machine($scope, $state, season_id, $state.params.team_id, $state.params.player_id);
     };
-    $scope._seasons = Season.query({}, function() {
-        $scope.seasons = $scope._seasons.filter(function(season) {
-            if($state.params.team_id) {
-                for(var i in season.teams) {
-                    if(season.teams[i].id == $state.params.team_id) {
-                        if($state.params.player_id) {
-                            for(var j in season.players) {
-                                if($state.params.player_id == season.players[j]) {
-                                    return season;
+    var set = function() {
+        $scope._seasons = Season.query({}, function() {
+            $scope.seasons = $scope._seasons.filter(function(season) {
+                if($state.params.team_id) {
+                    for(var i in season.teams) {
+                        if(season.teams[i].id == $state.params.team_id) {
+                            if($state.params.player_id) {
+                                for(var j in season.players) {
+                                    if($state.params.player_id == season.players[j]) {
+                                        return season;
+                                    }
                                 }
+                            } else {
+                                return season;
                             }
-                        } else {
+                        }
+                    }
+                    return null;
+                } else if($state.params.player_id) {
+                    for(var k in season.players) {
+                        if($state.params.player_id == season.players[k]) {
                             return season;
                         }
                     }
+                    return null;
+                } else {
+                    return season;
                 }
-                return null;
-            } else if($state.params.player_id) {
-                for(var k in season.players) {
-                    if($state.params.player_id == season.players[k]) {
-                        return season;
-                    }
-                }
-                return null;
-            } else {
-                return season;
-            }
+            });
         });
+    };
+    $scope.$on('$stateChangeSuccess', function() {
+        set();
     });
 }]);
 
@@ -98,32 +109,36 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
         }
         $scope.state_machine($scope, $state, $state.params.season_id, $state.params.team_id, player_id);
     };
-    $scope._players = Player.query({}, function() {
-        $scope.players = $scope._players.filter(function(player) {
-            if($state.params.team_id) {
-                for(var i in player.season_teams) {
-                    if(player.season_teams[i].team == $state.params.team_id) {
-                        if($state.params.season_id) {
-                            if(player.season_teams[i].season == $state.params.season_id) {
+    var set = function() {
+        $scope._players = Player.query({}, function() {
+            $scope.players = $scope._players.filter(function(player) {
+                if($state.params.team_id) {
+                    for(var i in player.season_teams) {
+                        if(player.season_teams[i].team == $state.params.team_id) {
+                            if($state.params.season_id) {
+                                if(player.season_teams[i].season == $state.params.season_id) {
+                                    return player;
+                                }
+                            } else {
                                 return player;
                             }
-                        } else {
+                        }
+                    }
+                    return null;
+                } else if($state.params.season_id) {
+                    for(var j in player.seasons) {
+                        if(player.seasons[j] == $state.params.season_id) {
                             return player;
                         }
                     }
+                    return null;
+                } else {
+                    return player;
                 }
-                return null;
-            } else if($state.params.season_id) {
-                for(var j in player.seasons) {
-                    if(player.seasons[j] == $state.params.season_id) {
-                        return player;
-                    }
-                }
-                return null;
-            } else {
-                return player;
-            }
+            });
         });
-
+    };
+    $scope.$on('$stateChangeSuccess', function() {
+        set();
     });
 }]);

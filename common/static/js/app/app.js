@@ -22,8 +22,7 @@ var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).
     $rootScope.$on('$stateChangeStart', function() {
         $('nav .nav .spinner').css('display','block');
     });
-    $rootScope.$on('$viewContentLoaded', function() {
-        // is run N times b/c N controllers fire it
+    $rootScope.$on('$stateChangeSuccess', function() {
         $('nav .nav .spinner').css('display','none');
     });
 }]);
@@ -41,26 +40,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
     });
     $stateProvider.state('team_chosen', {
         url: "/team/{team_id}/",
-        views: all_my_views
+        parent: "home"
     });
     $stateProvider.state('season_chosen', {
         url: "/season/{season_id}/",
-        views: all_my_views
+        parent: "home"
     });
     $stateProvider.state('player_chosen', {
         url: "/player/{player_id}/",
-        views: all_my_views
+        parent: "home"
     });
     $stateProvider.state('season_team_chosen', {
         url: "/team/{team_id}/season/{season_id}/",
-        views: all_my_views
+        parent: "home"
     });
     $stateProvider.state('season_player_chosen', {
         url: "/season/{season_id}/player/{player_id}/",
-        views: all_my_views
+        parent: "home"
     });
     $stateProvider.state('player_team_chosen', {
         url: "/player/{player_id}/team/{team_id}/",
-        views: all_my_views
+        parent: "home"
     });
 });
