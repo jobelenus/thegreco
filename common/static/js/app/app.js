@@ -23,18 +23,43 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     });
     $stateProvider.state('season_chosen', {
-        url: "/season/{season_id}/"
+        url: "/season/{season_id}/",
+        views: {
+            'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
+            'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },
+            'season': { controller: 'SeasonController', templateUrl: '/static/partials/season.view.html' }
+        }
     });
     $stateProvider.state('player_chosen', {
-        url: "/player/{player_id}/"
+        url: "/player/{player_id}/",
+        views: {
+            'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
+            'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },
+            'season': { controller: 'SeasonController', templateUrl: '/static/partials/season.view.html' }
+        }
     });
     $stateProvider.state('season_team_chosen', {
-        url: "/team/{team_id}/season/{season_id}/"
+        url: "/team/{team_id}/season/{season_id}/",
+        views: {
+            'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
+            'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },
+            'season': { controller: 'SeasonController', templateUrl: '/static/partials/season.view.html' }
+        }
     });
     $stateProvider.state('season_player_chosen', {
-        url: "/season/{season_id}/player/{player_id}/"
+        url: "/season/{season_id}/player/{player_id}/",
+        views: {
+            'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
+            'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },
+            'season': { controller: 'SeasonController', templateUrl: '/static/partials/season.view.html' }
+        }
     });
     $stateProvider.state('player_team_chosen', {
-        url: "/player/{player_id}/team/{team_id}/"
+        url: "/player/{player_id}/team/{team_id}/",
+        views: {
+            'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
+            'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },
+            'season': { controller: 'SeasonController', templateUrl: '/static/partials/season.view.html' }
+        }
     });
 });
