@@ -47,9 +47,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 templateUrl: '/static/partials/team.detail.html',
                 controller: "TeamDetail"
             }).result.then(function(result) {
-                console.log('result', result);
                 if(result) {
-                    console.log('transition out');
                     return $state.transitionTo("team_chosen");
                 }
             });
