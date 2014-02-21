@@ -6,8 +6,8 @@
             </div>
         </div>
         <div class="panel-body">
-            <ul class="list-unstyled">
-                <li class="well" ng-repeat="team in teams | filter:query">
+            <ul class="list-unstyled list-group">
+                <li class="list-group-item" ng-class="{ 'list-group-item-success': team.id == selected_id }" ng-repeat="team in teams | filter:query">
                     <a ng-click="choose(team.id)">{{team.name}}</a>
                 </li>
             </ul>

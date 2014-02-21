@@ -2,6 +2,10 @@ var controllers = angular.module('appControllers', []);
 
 controllers.controller('TeamController', ['$scope', 'Team', '$state', function($scope, Team, $state) {
     $scope.teams = Team.query();
+    $scope.selected_id = 0;
+    if($state.params.team_id) {
+        $scope.selected_id = $state.params.team_id;
+    }
     $scope.choose = function(team_id) {
         if($state.params.player_id) {
             $state.go('player_team_chosen', {player_id: $state.params.player_id, team_id: team_id});
