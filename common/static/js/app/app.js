@@ -1,6 +1,17 @@
 var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).run(function($http) {
     $http.defaults.headers.common.Authorization = 'Basic YWRtaW46cGFzc3dvcmQ=';
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+}).run(function($rootScope) {
+    $rootScope.$on('$stateChangeStart', function() {
+        $('nav .nav .spinner').css('display','block');
+    });
+    $rootScope.$on('$stateChangeSuccess', function() {
+        $('nav .nav .spinner').css('display','none');
+    });
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+        $('nav .nav .spinner').css('display','none');
+        alert('Error: ' + error);
+    });
 });
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -24,6 +35,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     });
     $stateProvider.state('season_chosen', {
         url: "/season/{season_id}/",
+        // TODO: how not to duplicate this!
         views: {
             'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
             'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },

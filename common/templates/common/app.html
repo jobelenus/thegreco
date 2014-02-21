@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <title>The Greco</title>
     <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap.css" %}">
+    <script type="text/javascript" src="{% static "lib/jquery-1.11.0.js" %}"></script>
+    <script type="text/javascript" src="{% static "lib/bootstrap/js/bootstrap.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular-resource.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular-ui-router.js" %}"></script>
@@ -28,9 +30,54 @@
     .panel ul li:hover {
         cursor: pointer;
     }
+    @-moz-keyframes spin {
+        from { -moz-transform: rotate(0deg); }
+        to { -moz-transform: rotate(360deg); }
+    }
+    @-webkit-keyframes spin {
+        from { -webkit-transform: rotate(0deg); }
+        to { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes spin {
+        from {transform:rotate(0deg);}
+        to {transform:rotate(360deg);}
+    }
+    nav .navbar-nav .spinner {
+        display: none;
+        width: 14px;
+        height: 14px;
+        margin: 15px;
+        -webkit-animation-name: spin;
+        -webkit-animation-duration: 500ms;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -moz-animation-name: spin;
+        -moz-animation-duration: 500ms;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: linear;
+        -ms-animation-name: spin;
+        -ms-animation-duration: 500ms;
+        -ms-animation-iteration-count: infinite;
+        -ms-animation-timing-function: linear;
+        -o-transition: rotate(360deg);
+    }
+    nav .nav.navbar-nav.navbar-right {
+        padding-right: 15px;
+    }
     </style>
 </head>
 <body class="container-fluid">
+<div class="row">
+    <nav class="navbar navbar-default" role="navigation">
+        <ul class="nav navbar-nav navbar-left">
+            <li><a href="{% url 'app' %}">Home</a></li>
+            <li><a href="/admin/">Admin</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><span class="spinner glyphicon glyphicon-repeat">&nbsp;</span></li>
+        </ul>
+    </nav>
+</div>
 <div class="row">
     <section class="season panel panel-default col-md-4" ui-view="season"></section>
     <section class="team panel panel-default col-md-4" ui-view="team"></section>
