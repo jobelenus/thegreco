@@ -1,7 +1,7 @@
-var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).run(function($http) {
+var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).run(['$http', function($http) {
     $http.defaults.headers.common.Authorization = 'Basic YWRtaW46cGFzc3dvcmQ=';
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-}).run(function($rootScope) {
+}]).run(['$rootScope', function($rootScope) {
     $rootScope.$on('$stateChangeStart', function() {
         $('nav .nav .spinner').css('display','block');
     });
@@ -12,7 +12,7 @@ var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).
         $('nav .nav .spinner').css('display','none');
         alert('Error: ' + error);
     });
-});
+}]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
