@@ -7,11 +7,13 @@ class AdminEditURLMixin(object):
 
     def get_admin_edit_url(self, instance):
         print 'admin:%s_%s_change % ', instance._meta.app_label, instance._meta.module_name, instance.id
-        return reverse('admin:%s_%s_change' % (instance._meta.app_label, instance._meta.module_name), args=[instance.id] )
+        return reverse('admin:%s_%s_change' %
+                       (instance._meta.app_label, instance._meta.module_name),
+                       args=[instance.id])
 
 
 class TeamPlayerSeasonSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = common.TeamPlayerSeason
         fields = ('id', 'team', 'player', 'season', 'created_on', 'modified_on')
@@ -42,7 +44,7 @@ class SeasonSerializer(AdminEditURLMixin, serializers.ModelSerializer):
     class Meta:
         model = common.Season
         fields = ('id', 'name', 'created_on', 'modified_on', 'teams', 'players', 'admin_edit_url')
- 
+
 
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = common.Player.objects.all()

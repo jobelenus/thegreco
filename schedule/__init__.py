@@ -17,7 +17,7 @@ def create_round_robin(schedule):
                 Game.objects.create(home_team=team, away_team=_team, schedule=schedule, status=Game.STATUS_SCHEDULED)
             teams.append(team)
             row += 1
-            
+
 
 def enforce_schedule_preference_for_players(season):
     import common
