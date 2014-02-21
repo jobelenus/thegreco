@@ -15,6 +15,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     });
     $stateProvider.state('team_chosen', {
         url: "/team/{team_id}/",
+        // TODO: how not to duplicate this!
         views: {
             'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
             'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },
