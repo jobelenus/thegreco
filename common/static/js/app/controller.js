@@ -16,12 +16,16 @@ controllers.controller('TeamController', ['$scope', 'Team', '$state', function($
 controllers.controller('SeasonController', ['$scope', 'Season', '$state', function($scope, Season, $state) {
     $scope._seasons = Season.query({}, function() {
         $scope.seasons = $scope._seasons.filter(function(season) {
-            for(var i in season.teams) {
-                if(season.teams[i].id == $state.params.team_id) {
-                    return season;
+            if($state.params.team_id) {
+                for(var i in season.teams) {
+                    if(season.teams[i].id == $state.params.team_id) {
+                        return season;
+                    }
                 }
+                return null;
+            } else {
+                return season;
             }
-            return null;
         });
     });
     console.log('season', $state);
