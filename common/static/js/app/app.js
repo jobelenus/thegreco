@@ -28,15 +28,14 @@ var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).
 }]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
-    var all_my_views = {
-        'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
-        'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },
-        'season': { controller: 'SeasonController', templateUrl: '/static/partials/season.view.html' }
-    };
     $urlRouterProvider.otherwise("/");
     $stateProvider.state("home", {
         url: "/",
-        views: all_my_views
+        views: {
+            'team': { controller: 'TeamController', templateUrl: '/static/partials/team.view.html' },
+            'player': { controller: 'PlayerController', templateUrl: '/static/partials/player.view.html' },
+            'season': { controller: 'SeasonController', templateUrl: '/static/partials/season.view.html' }
+        }
     });
     $stateProvider.state('team_chosen', {
         url: "team/{team_id}/",
