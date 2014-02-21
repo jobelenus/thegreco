@@ -1,5 +1,4 @@
 var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).run(['$http', function($http) {
-    $http.defaults.headers.common.Authorization = 'Basic YWRtaW46cGFzc3dvcmQ=';
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]).run(['$rootScope', function($rootScope) {
     $rootScope.state_machine = function($state, season_id, team_id, player_id) {

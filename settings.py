@@ -101,5 +101,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser'
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',  # only on for testing
+        'rest_framework.authentication.SessionAuthentication',
+    ),
     'PAGINATE_BY': 50
 }
