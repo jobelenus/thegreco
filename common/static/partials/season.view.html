@@ -8,7 +8,7 @@
         <div class="panel-body">
             <ul class="list-unstyled">
                 <li class="well" ng-repeat="season in seasons | filter:query">
-                    <a ui-sref="season.chosen({seasonId:season.id})">{{season.name}}</a>
+                    {{season.name}}
                 </li>
             </ul>
         </div>
