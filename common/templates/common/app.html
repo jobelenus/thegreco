@@ -25,13 +25,16 @@
         padding: 10px 12px;
         pointer-events: none;
     }
+    .panel ul li:hover {
+        cursor: pointer;
+    }
     </style>
 </head>
 <body class="container-fluid">
 <div class="row">
-    <section class="team panel panel-default col-md-4" ui-view="season"></section>
+    <section class="season panel panel-default col-md-4" ui-view="season"></section>
     <section class="team panel panel-default col-md-4" ui-view="team"></section>
-    <section class="team panel panel-default col-md-4" ui-view="player"></section>
+    <section class="player panel panel-default col-md-4" ui-view="player"></section>
 </div>
 </body>
 </html>
