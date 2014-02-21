@@ -2,20 +2,6 @@ from rest_framework import viewsets, routers, serializers
 import common
 
 
-class TeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = common.Team
-        fields = ('id', 'name', 'seasons', 'is_hidden', 'created_on', 'modified_on')
-
-
-class SeasonSerializer(serializers.ModelSerializer):
-    teams = TeamSerializer(source='teams')
-
-    class Meta:
-        model = common.Season
-        fields = ('id', 'name', 'created_on', 'modified_on', 'teams')
-
-
 class TeamPlayerSeasonSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -29,6 +15,22 @@ class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = common.Player
         fields = ('id', 'name', 'email', 'gender', 'seasons', 'created_on', 'modified_on', 'season_teams')
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    season_players = TeamPlayerSeasonSerializer(source='season_players')
+
+    class Meta:
+        model = common.Team
+        fields = ('id', 'name', 'seasons', 'is_hidden', 'created_on', 'modified_on', 'season_players')
+
+
+class SeasonSerializer(serializers.ModelSerializer):
+    teams = TeamSerializer(source='teams')
+
+    class Meta:
+        model = common.Season
+        fields = ('id', 'name', 'created_on', 'modified_on', 'teams', 'players')
  
 
 class PlayerViewSet(viewsets.ModelViewSet):
