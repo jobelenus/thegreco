@@ -8,6 +8,7 @@
     <script type="text/javascript" src="{% static "lib/jquery-1.11.0.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/bootstrap/js/bootstrap.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular.js" %}"></script>
+    <script type="text/javascript" src="{% static "lib/ui-bootstrap-0.10.0.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular-resource.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular-animate.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/angular/angular-ui-router.js" %}"></script>
@@ -32,8 +33,14 @@
         padding: 10px 12px;
         pointer-events: none;
     }
-    .panel ul li:hover {
+    .panel ul li a:hover {
         cursor: pointer;
+    }
+    .panel ul li a.edit {
+        display:none;
+    }
+    .panel ul li.list-group-item-success a.edit {
+        display:inline;
     }
     @-moz-keyframes spin {
         from { -moz-transform: rotate(0deg); }

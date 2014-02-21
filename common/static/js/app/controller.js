@@ -142,3 +142,19 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
         set();
     });
 }]);
+
+
+controllers.controller('TeamDetail', ['$scope', 'Team', '$state', function($scope, Team, $state) {
+    $scope.team = Team.get({id: $state.params.team_id});
+
+    // handling modal guts
+    $scope.dismiss = function() {
+        $scope.$dismiss();
+    };
+
+    $scope.save = function() {
+        $scope.team.update().then(function() {
+            $scope.$close(true);
+        });
+    };
+}]);

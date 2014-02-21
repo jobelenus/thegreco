@@ -1,4 +1,4 @@
-var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).run(['$http', function($http) {
+var app = angular.module('app', ['appControllers', 'appServices', 'ui.router', 'ui.bootstrap']).run(['$http', function($http) {
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]).run(['$rootScope', function($rootScope) {
     $rootScope.state_machine = function($state, season_id, team_id, player_id) {
@@ -26,7 +26,7 @@ var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).
     });
 }]);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     $stateProvider.state("home", {
         url: "/",
@@ -39,6 +39,21 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('team_chosen', {
         url: "team/{team_id}/",
         parent: "home"
+    });
+    $stateProvider.state('team_chosen.edit', {
+        url: "edit/",
+        onEnter: function($stateParams, $state, $modal) {
+            $modal.open({
+                templateUrl: '/static/partials/team.detail.html',
+                controller: "TeamDetail"
+            }).result.then(function(result) {
+                console.log('result', result);
+                if(result) {
+                    console.log('transition out');
+                    return $state.transitionTo("team_chosen");
+                }
+            });
+        }
     });
     $stateProvider.state('season_chosen', {
         url: "season/{season_id}/",
@@ -60,4 +75,4 @@ app.config(function($stateProvider, $urlRouterProvider) {
         url: "player/{player_id}/team/{team_id}/",
         parent: "home"
     });
-});
+}]);
