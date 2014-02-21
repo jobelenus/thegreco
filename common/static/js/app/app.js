@@ -39,27 +39,27 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: all_my_views
     });
     $stateProvider.state('team_chosen', {
-        url: "/team/{team_id}/",
+        url: "team/{team_id}/",
         parent: "home"
     });
     $stateProvider.state('season_chosen', {
-        url: "/season/{season_id}/",
+        url: "season/{season_id}/",
         parent: "home"
     });
     $stateProvider.state('player_chosen', {
-        url: "/player/{player_id}/",
+        url: "player/{player_id}/",
         parent: "home"
     });
     $stateProvider.state('season_team_chosen', {
-        url: "/team/{team_id}/season/{season_id}/",
+        url: "team/{team_id}/season/{season_id}/",
         parent: "home"
     });
     $stateProvider.state('season_player_chosen', {
-        url: "/season/{season_id}/player/{player_id}/",
+        url: "season/{season_id}/player/{player_id}/",
         parent: "home"
     });
     $stateProvider.state('player_team_chosen', {
-        url: "/player/{player_id}/team/{team_id}/",
+        url: "player/{player_id}/team/{team_id}/",
         parent: "home"
     });
 });
