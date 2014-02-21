@@ -6,9 +6,9 @@
             </div>
         </div>
         <div class="panel-body">
-            <ul class="list-unstyled">
-                <li class="well" ng-repeat="player in players | filter:query">
-                    <a ui-sref="player.chosen({playerId:player.id})">{{player.name}}</a>
+            <ul class="list-unstyled list-group">
+                <li class="list-group-item" ng-class="{ 'list-group-item-success': player.id == selected_id }" ng-repeat="player in players | filter:query">
+                    <a ng-click="choose(player.id)">{{player.name}}</a>
                 </li>
             </ul>
         </div>
