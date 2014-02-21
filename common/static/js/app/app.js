@@ -2,7 +2,7 @@ var app = angular.module('app', ['appControllers', 'appServices', 'ui.router']).
     $http.defaults.headers.common.Authorization = 'Basic YWRtaW46cGFzc3dvcmQ=';
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]).run(['$rootScope', function($rootScope) {
-    $rootScope.state_machine = function($scope, $state, season_id, team_id, player_id) {
+    $rootScope.state_machine = function($state, season_id, team_id, player_id) {
         if(player_id && !team_id && !season_id) {
             $state.transitionTo('player_chosen', {player_id: player_id});
         } else if(season_id && !team_id && !player_id) {

@@ -7,7 +7,7 @@ controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', 
             $scope.selected.id = 0;
             team_id = 0;
         }
-        $scope.state_machine($scope, $state, $state.params.season_id, team_id, $state.params.player_id);
+        $scope.state_machine($state, $state.params.season_id, team_id, $state.params.player_id);
     };
     
     var set = function() {
@@ -56,7 +56,7 @@ controllers.controller('SeasonController', ['$scope', 'Season', 'Player', '$stat
             $scope.selected.id = 0;
             season_id = 0;
         }
-        $scope.state_machine($scope, $state, season_id, $state.params.team_id, $state.params.player_id);
+        $scope.state_machine($state, season_id, $state.params.team_id, $state.params.player_id);
     };
     var set = function() {
         if($state.params.season_id) {
@@ -104,7 +104,7 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
             $scope.selected.id = 0;
             player_id = 0;
         }
-        $scope.state_machine($scope, $state, $state.params.season_id, $state.params.team_id, player_id);
+        $scope.state_machine($state, $state.params.season_id, $state.params.team_id, player_id);
     };
     var set = function() {
         if($state.params.player_id) {
