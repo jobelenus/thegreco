@@ -2,21 +2,21 @@ var services = angular.module('appServices', ['djangoRESTResources']);
 
 services.factory('Team', ['djResource',
   function($resource){
-    return $resource('/rest/common/:teamId/', {}, {
-      query: {method:'GET', params:{teamId:'teams'}, isArray:true}
+    return $resource('/rest/common/teams/:id', {}, {
+      query: {method:'GET', params:{}, isArray:true}
     });
   }]);
 
 services.factory('Player', ['djResource',
   function($resource){
-    return $resource('/rest/common/:playerId/', {}, {
-      query: {method:'GET', params:{playerId:'players'}, isArray:true}
+    return $resource('/rest/common/players/:id', {}, {
+      query: {method:'GET', params:{}, isArray:true}
     });
   }]);
 
 services.factory('Season', ['djResource',
   function($resource){
-    return $resource('/rest/common/:seasonId/', {}, {
-      query: {method:'GET', params:{seasonId:'seasons'}, isArray:true}
+    return $resource('/rest/common/seasons/:id/', {}, {
+      query: {method:'GET', params:{}, isArray:true}
     });
   }]);
