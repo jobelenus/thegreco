@@ -146,20 +146,20 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
 
 controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', function($scope, TeamDetail, $state) {
     $scope.form = {season: 0};
+    $scope.messages = {};
     $scope.team = TeamDetail.get({id: $state.params.team_id});
     $scope.add = function() {
-        if($scope.form.season.id === 0) {
-            alert('choose something');
+        if($scope.form.season === 0) {
+            $scope.messages.choose_error = true;
         } else {
-            $scope.teams.seasons.append($scope.form.season);
+            $scope.team.seasons.push($scope.form.season);
             for(var i in $scope.team.seasons_not_in) {
                 if($scope.team.seasons_not_in[i].id == $scope.form.season) {
                     $scope.team.seasons_not_in.remove(i);
                 }
             }
-            $scope.team.update().then(function() {
-                $scope.$close(true);
-                console.log('success');
+            $scope.team.$save().then(function() {
+                $scope.messages.success = true;
             }, function() {
                 console.log('error');
             });
