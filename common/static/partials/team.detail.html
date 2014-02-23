@@ -1,2 +1,11 @@
-<h3>{{ team.name }}</h3>
-<p>Add to season: [ Season Im Not In ]</p>
+<div class="team detail panel panel-default">
+    <div class="panel-body">
+        <h3>{{ team.name }}</h3>
+        <form action="" method="POST" class="form form-inline">
+            <input type="submit" class="btn btn-primary season-add" value="Add To">
+            <select class="form-control" data-live-search="true">
+                <option>Season 1</option>
+            </select>
+        </form>
+    </div>
+</div>
