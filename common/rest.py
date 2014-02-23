@@ -37,6 +37,18 @@ class TeamSerializer(AdminEditURLMixin, serializers.ModelSerializer):
         fields = ('id', 'name', 'seasons', 'is_hidden', 'created_on', 'modified_on', 'season_players', 'admin_edit_url')
 
 
+class TeamDetailSerializer(AdminEditURLMixin, serializers.ModelSerializer):
+    admin_edit_url = serializers.SerializerMethodField('get_admin_edit_url')
+    seasons_not_in = serializers.SerializerMethodField('get_seasons_not_in')
+
+    def get_seasons_not_in(self, instance):
+        return [{'id': s.id, 'name': s.name} for s in common.Season.objects.exclude(id__in=instance.seasons.all())]
+
+    class Meta:
+        model = common.Team
+        fields = ('id', 'name', 'seasons', 'is_hidden', 'created_on', 'modified_on', 'seasons_not_in')
+
+
 class SeasonSerializer(AdminEditURLMixin, serializers.ModelSerializer):
     admin_edit_url = serializers.SerializerMethodField('get_admin_edit_url')
     teams = TeamSerializer(source='teams')
@@ -59,6 +71,11 @@ class TeamViewSet(viewsets.ModelViewSet):
 class SeasonViewSet(viewsets.ModelViewSet):
     queryset = common.Season.objects.all()
     serializer_class = SeasonSerializer
+
+
+class TeamDetailSet(viewsets.ModelViewSet):
+    model = common.Team
+    serializer_class = TeamDetailSerializer
 
 
 router = routers.DefaultRouter()
