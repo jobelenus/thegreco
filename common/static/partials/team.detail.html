@@ -2,10 +2,11 @@
     <button type="button" class="close pull-right" aria-hidden="true" ng-click="dismiss()">&times;</button>
     <div class="panel-body">
         <h3>{{ team.name }}</h3>
-        <form action="" method="POST" class="form form-inline">
-            <input type="submit" class="btn btn-primary season-add" value="Add To">
-            <select class="form-control" data-live-search="true">
-                <option>Season 1</option>
+        <form novalidate method="POST" class="form form-inline" ng-if="team.seasons_not_in">
+            <button ng-click="add" class="btn btn-primary season-add">Add To Season</button>
+            <select class="form-control" ng-model="form.season">
+                <option value="0">Choose...</option>
+                <option ng-repeat="season in team.seasons_not_in" value="{{season.id}}">{{season.name}}</option>
             </select>
         </form>
     </div>

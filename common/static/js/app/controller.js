@@ -144,17 +144,28 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
 }]);
 
 
-controllers.controller('TeamDetail', ['$scope', 'Team', '$state', function($scope, Team, $state) {
-    $scope.team = Team.get({id: $state.params.team_id});
-
-    // handling modal guts
+controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', function($scope, TeamDetail, $state) {
+    $scope.form = {season: 0};
+    $scope.team = TeamDetail.get({id: $state.params.team_id});
+    $scope.add = function() {
+        if($scope.form.season.id === 0) {
+            alert('choose something');
+        } else {
+            $scope.teams.seasons.append($scope.form.season);
+            for(var i in $scope.team.seasons_not_in) {
+                if($scope.team.seasons_not_in[i].id == $scope.form.season) {
+                    $scope.team.seasons_not_in.remove(i);
+                }
+            }
+            $scope.team.update().then(function() {
+                $scope.$close(true);
+                console.log('success');
+            }, function() {
+                console.log('error');
+            });
+        }
+    };
     $scope.dismiss = function() {
         $scope.$dismiss();
-    };
-
-    $scope.save = function() {
-        $scope.team.update().then(function() {
-            $scope.$close(true);
-        });
     };
 }]);

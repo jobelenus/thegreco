@@ -7,6 +7,13 @@ services.factory('Team', ['djResource',
     });
   }]);
 
+services.factory('TeamDetail', ['djResource',
+  function($resource){
+    return $resource('/rest/common/teams/:id/detail/', {}, {
+      query: {method:'GET', params:{}, isArray:true}
+    });
+  }]);
+
 services.factory('Player', ['djResource',
   function($resource){
     return $resource('/rest/common/players/:id', {}, {

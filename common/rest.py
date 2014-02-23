@@ -42,7 +42,13 @@ class TeamDetailSerializer(AdminEditURLMixin, serializers.ModelSerializer):
     seasons_not_in = serializers.SerializerMethodField('get_seasons_not_in')
 
     def get_seasons_not_in(self, instance):
-        return [{'id': s.id, 'name': s.name} for s in common.Season.objects.exclude(id__in=instance.seasons.all())]
+        seasons_not_in = common.Season.objects.exclude(id__in=instance.seasons.all())
+        if seasons_not_in:
+            ret = [{'id': s.id, 'name': s.name} for s in seasons_not_in]
+            ret.append({'id': 0, 'name': 'Choose...'})
+            return ret
+        else:
+            return []
 
     class Meta:
         model = common.Team
