@@ -5,8 +5,11 @@ Array.prototype.remove = function(from, to) {
     return this.push.apply(this, rest);
 };
 
-var app = angular.module('app', ['appControllers', 'appServices', 'ui.router', 'ui.bootstrap']).run(['$http', function($http) {
+var app = angular.module('app', ['appControllers', 'appServices', 'ui.router', 'ui.bootstrap', 'ngCookies']).run(['$http', '$cookies', function($http, $cookies) {
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+    $http.defaults.xsrfCookieName = 'csrftoken';
+    $http.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]).run(['$rootScope', function($rootScope) {
     $rootScope.state_machine = function($state, season_id, team_id, player_id) {
         if(player_id && !team_id && !season_id) {
