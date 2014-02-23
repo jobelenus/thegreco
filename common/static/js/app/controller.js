@@ -158,10 +158,10 @@ controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', function
                     $scope.team.seasons_not_in.remove(i);
                 }
             }
-            $scope.team.$save().then(function() {
+            $scope.team.$save(function() {
                 $scope.messages.success = true;
             }, function() {
-                console.log('error');
+                $scope.messages.an_error = true;
             });
         }
     };
