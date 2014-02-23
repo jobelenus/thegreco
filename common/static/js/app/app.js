@@ -46,10 +46,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             $modal.open({
                 templateUrl: '/static/partials/team.detail.html',
                 controller: "TeamDetail"
-            }).result.then(function(result) {
-                if(result) {
-                    return $state.transitionTo("team_chosen");
-                }
+            }).result.then(function() {
+                // nothing
+            }, function(result) {
+                return $state.transitionTo("team_chosen", {team_id: $state.params.team_id});
             });
         }
     });
