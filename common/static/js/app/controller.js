@@ -153,13 +153,14 @@ controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', function
             $scope.messages.choose_error = true;
         } else {
             $scope.team.seasons.push($scope.form.season);
-            for(var i in $scope.team.seasons_not_in) {
-                if($scope.team.seasons_not_in[i].id == $scope.form.season) {
-                    $scope.team.seasons_not_in.remove(i);
-                }
-            }
             $scope.team.$save(function() {
                 $scope.messages.success = true;
+                $scope.form.season = 0;
+                for(var i in $scope.team.seasons_not_in) {
+                    if($scope.team.seasons_not_in[i].id == $scope.form.season) {
+                        $scope.team.seasons_not_in.remove(i);
+                    }
+                }
             }, function() {
                 $scope.messages.an_error = true;
             });
