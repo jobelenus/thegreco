@@ -186,7 +186,7 @@ class Season(Stamps, models.Model):
     verbose = models.Manager()
 
     def __unicode__(self):
-        return "%s (%s-%s)" % (self.name, formats.date_format(self.starts_on), formats.date_format(self.starts_on))
+        return "%s (%s-%s)" % (self.name, formats.date_format(self.starts_on) if self.starts_on else 'N/A', formats.date_format(self.ends_on) if self.ends_on else 'N/A')
 
     def gender_rule_is(self, const):
         return True if self.gender_rule == const else False
