@@ -1,3 +1,10 @@
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
+
 var app = angular.module('app', ['appControllers', 'appServices', 'ui.router', 'ui.bootstrap']).run(['$http', function($http) {
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]).run(['$rootScope', function($rootScope) {
