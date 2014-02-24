@@ -100,6 +100,5 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',  # only on for testing
         'rest_framework.authentication.SessionAuthentication',
-    ),
-    'PAGINATE_BY': 50
+    )
 }

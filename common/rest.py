@@ -66,16 +66,19 @@ class SeasonSerializer(AdminEditURLMixin, serializers.ModelSerializer):
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = common.Player.objects.all()
     serializer_class = PlayerSerializer
+    paginate_by = 7
 
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = common.Team.objects.all()
     serializer_class = TeamSerializer
+    paginate_by = 7
 
 
 class SeasonViewSet(viewsets.ModelViewSet):
     queryset = common.Season.objects.all()
     serializer_class = SeasonSerializer
+    paginate_by = 7
 
 
 class TeamDetailSet(viewsets.ModelViewSet):
