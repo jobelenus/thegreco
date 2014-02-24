@@ -10,7 +10,8 @@ services.factory('Team', ['djResource',
 services.factory('TeamDetail', ['djResource',
   function($resource){
     return $resource('/rest/common/teams/:id/detail/', {id: '@id'}, {
-      query: {method:'GET', params:{}, isArray:true}
+      query: {method:'GET', params:{}, isArray:true},
+      add_season: {method:'PUT', params:{}, isArray:false}
     });
   }]);
 

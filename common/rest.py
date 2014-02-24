@@ -1,6 +1,8 @@
-from rest_framework import viewsets, routers, serializers
-import common
+from rest_framework import generics, viewsets, routers, serializers
+from rest_framework.response import Response
+from rest_framework import status
 from django.core.urlresolvers import reverse
+import common
 
 
 class AdminEditURLMixin(object):
@@ -43,9 +45,7 @@ class TeamDetailSerializer(AdminEditURLMixin, serializers.ModelSerializer):
     def get_seasons_not_in(self, instance):
         seasons_not_in = common.Season.objects.exclude(id__in=instance.seasons.all())
         if seasons_not_in:
-            ret = [{'id': s.id, 'name': s.name} for s in seasons_not_in]
-            ret.append({'id': 0, 'name': 'Choose...'})
-            return ret
+            return [{'id': s.id, 'name': s.name} for s in seasons_not_in]
         else:
             return []
 
@@ -81,9 +81,18 @@ class SeasonViewSet(viewsets.ReadOnlyModelViewSet):
     paginate_by = 7
 
 
-class TeamDetailSet(viewsets.ModelViewSet):
+class TeamDetail(generics.RetrieveUpdateAPIView):
     model = common.Team
     serializer_class = TeamDetailSerializer
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object_or_none()
+        season_id = request.DATA.get('season', None)
+        if season_id:
+            season = common.Season.objects.get(id=season_id)
+            common.add_team_to_season(self.object, season)
+        serializer = self.get_serializer(self.object)
+        return Response(serializer.data)
 
 
 router = routers.DefaultRouter()

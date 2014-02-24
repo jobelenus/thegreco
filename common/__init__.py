@@ -92,6 +92,10 @@ def find_captains_on(team, season):
     return Player.objects.filter(season_teams__team=team, season_teams__season=season, season_teams__is_captain=True)
 
 
+def add_team_to_season(team, season):
+    return team.seasons.add(season)
+
+
 @gender_rules(PermissionsException.MSG_ELIGIBLE)
 @open_season(PermissionsException.MSG_SEASON)
 def add_player_to_season(player, season):

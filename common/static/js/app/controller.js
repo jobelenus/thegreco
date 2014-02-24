@@ -174,16 +174,11 @@ controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', '$rootSc
         if($scope.form.season === 0) {
             $scope.messages.choose_error = true;
         } else {
-            $scope.team.seasons.push($scope.form.season);
-            $scope.team.$save(function() {
+            TeamDetail.add_season({'id': $scope.team.id, 'season': $scope.form.season}, function(team) {
                 $scope.messages.success = true;
                 $rootScope.$broadcast('$stateChangeSuccess');  // update the other controllers with the new data
                 $scope.form.season = 0;
-                for(var i in $scope.team.seasons_not_in) {
-                    if($scope.team.seasons_not_in[i].id == $scope.form.season) {
-                        $scope.team.seasons_not_in.remove(i);
-                    }
-                }
+                $scope.team = team;
             }, function() {
                 $scope.messages.an_error = true;
             });
