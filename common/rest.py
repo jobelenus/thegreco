@@ -63,25 +63,25 @@ class SeasonSerializer(AdminEditURLMixin, serializers.ModelSerializer):
         fields = ('id', 'name', 'created_on', 'modified_on', 'teams', 'players', 'admin_edit_url')
 
 
-class PlayerViewSet(viewsets.ModelViewSet):
+class PlayerViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = common.Player.objects.all()
     serializer_class = PlayerSerializer
     paginate_by = 7
 
 
-class TeamViewSet(viewsets.ModelViewSet):
+class TeamViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = common.Team.objects.all()
     serializer_class = TeamSerializer
     paginate_by = 7
 
 
-class SeasonViewSet(viewsets.ModelViewSet):
+class SeasonViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = common.Season.objects.all()
     serializer_class = SeasonSerializer
     paginate_by = 7
 
 
-class TeamDetailSet(viewsets.ModelViewSet):
+class TeamDetailSet(viewsets.ReadOnlyModelViewSet):
     model = common.Team
     serializer_class = TeamDetailSerializer
 
