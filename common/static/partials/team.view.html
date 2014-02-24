@@ -13,7 +13,7 @@
             </div>
         </div>
         <ul class="list-unstyled list-group">
-            <li class="list-group-item" ng-class="{ 'list-group-item-success': team.id == selected.id }" ng-repeat="team in teams | filter:query">
+            <li class="list-group-item" ng-class="{ 'list-group-item-success': team.id == selected.id }" ng-repeat="team in resources | filter:query">
                 <a ng-click="choose(team.id)">{{team.name}}</a>
                 <div class="pull-right">
                     <a ui-sref="team_chosen.edit({team_id:team.id})" class="edit glyphicon glyphicon-edit">&nbsp;</a>
