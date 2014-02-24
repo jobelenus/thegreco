@@ -6,7 +6,6 @@ from django.core.urlresolvers import reverse
 class AdminEditURLMixin(object):
 
     def get_admin_edit_url(self, instance):
-        print 'admin:%s_%s_change % ', instance._meta.app_label, instance._meta.module_name, instance.id
         return reverse('admin:%s_%s_change' %
                        (instance._meta.app_label, instance._meta.module_name),
                        args=[instance.id])
