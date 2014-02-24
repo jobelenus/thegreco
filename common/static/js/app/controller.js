@@ -232,10 +232,3 @@ controllers.controller('PlayerDetail', ['$scope', 'PlayerDetail', '$state', '$ro
         $scope.$dismiss();
     };
 }]);
-
-/*
-import common
-t = common.Team.objects.get(id=1)
-t.seasons.remove(t.seasons.all()[2])
-exit()
-*/
