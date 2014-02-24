@@ -81,7 +81,7 @@ class SeasonViewSet(viewsets.ReadOnlyModelViewSet):
     paginate_by = 7
 
 
-class TeamDetailSet(viewsets.ReadOnlyModelViewSet):
+class TeamDetailSet(viewsets.ModelViewSet):
     model = common.Team
     serializer_class = TeamDetailSerializer
 
