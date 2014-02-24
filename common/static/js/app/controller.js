@@ -15,13 +15,13 @@ var ListController = function($scope, Resource, $state, $q) {
         self.update_state_machine(resource_id);
     };
 
-    var deferred = $q.defer();
+    $scope.deferred = $q.defer();
     $scope._resources = Resource.query({}, function() {
-        deferred.resolve();
+        $scope.deferred.resolve();
         self.stop_spinner();
     });
     var set = function() {
-        deferred.promise.then(function() {
+        $scope.deferred.promise.then(function() {
             $scope.resources = $scope._resources.filter(self.filter_function, self);
         });
     };
@@ -81,6 +81,17 @@ controllers.controller('TeamController', ['$scope', 'Team', '$state', '$q', Team
 
 var SeasonController = function($scope, Resource, $state, $q) {
     ListController.call(this, $scope, Resource, $state, $q);
+
+    $scope.$on('updateSeason', function(event, deferred, season) {
+        $scope.deferred.promise.then(function() {
+            for(var i in $scope._resources) {
+                if($scope._resources[i].id == season.id) {
+                    $scope._resources[i] = season;
+                }
+            }
+        });
+        deferred.resolve();
+    });
 };
 SeasonController.prototype = Object.create(ListController.prototype);
 SeasonController.prototype.update_state_machine = function(season_id) {
@@ -165,7 +176,7 @@ PlayerController.prototype.filter_function = function(player) {
 };
 controllers.controller('PlayerController', ['$scope', 'Player', '$state', '$q', PlayerController]) ;    
 
-controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', '$rootScope', function($scope, TeamDetail, $state, $rootScope) {
+controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', '$rootScope', '$q', function($scope, TeamDetail, $state, $rootScope, $q) {
     $scope.form = {season: 0};
     $scope.messages = {};
     $scope.team = TeamDetail.get({id: $state.params.team_id});
@@ -175,9 +186,17 @@ controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', '$rootSc
         } else {
             TeamDetail.add_season({'id': $scope.team.id, 'season': $scope.form.season}, function(team) {
                 $scope.messages.success = true;
-                $rootScope.$broadcast('$stateChangeSuccess');
                 $scope.form.season = 0;
                 $scope.team = team;
+                var promises = [];
+                for(var i in team.seasons) {
+                    var deferred = $q.defer();
+                    promises.push(deferred);
+                    $rootScope.$broadcast('updateSeason', deferred, team.seasons[i]);
+                }
+                $q.all(promises).then(function() {
+                    $rootScope.$broadcast('$stateChangeSuccess');
+                });
             }, function() {
                 $scope.messages.an_error = true;
             });
@@ -210,3 +229,10 @@ controllers.controller('PlayerDetail', ['$scope', 'PlayerDetail', '$state', '$ro
         $scope.$dismiss();
     };
 }]);
+
+/*
+import common
+t = common.Team.objects.get(id=1)
+t.seasons.remove(t.seasons.all()[2])
+exit()
+*/
