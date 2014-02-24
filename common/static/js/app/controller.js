@@ -143,8 +143,7 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
     });
 }]);
 
-
-controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', function($scope, TeamDetail, $state) {
+controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', '$rootScope', function($scope, TeamDetail, $state, $rootScope) {
     $scope.form = {season: 0};
     $scope.messages = {};
     $scope.team = TeamDetail.get({id: $state.params.team_id});
@@ -155,6 +154,7 @@ controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', function
             $scope.team.seasons.push($scope.form.season);
             $scope.team.$save(function() {
                 $scope.messages.success = true;
+                $rootScope.$broadcast('$stateChangeSuccess');  // update the other controllers with the new data
                 $scope.form.season = 0;
                 for(var i in $scope.team.seasons_not_in) {
                     if($scope.team.seasons_not_in[i].id == $scope.form.season) {
