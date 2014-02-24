@@ -13,6 +13,7 @@ controllers.controller('TeamController', ['$scope', 'Team', '$state', '$q', func
     var deferred = $q.defer();
     $scope._teams = Team.query({}, function() {
         deferred.resolve();
+        $('.team .panel .spinner').css('display', 'none');
     });
     var set = function() {
         if($state.params.team_id) {
@@ -65,6 +66,7 @@ controllers.controller('SeasonController', ['$scope', 'Season', '$state', '$q', 
     var deferred = $q.defer();
     $scope._seasons = Season.query({}, function() {
         deferred.resolve();
+        $('.season .panel .spinner').css('display', 'none');
     });
     var set = function() {
         if($state.params.season_id) {
@@ -117,6 +119,7 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', '$q', 
     var deferred = $q.defer();
     $scope._players = Player.query({}, function() {
         deferred.resolve();
+        $('.player .panel .spinner').css('display', 'none');
     });
     var set = function() {
         if($state.params.player_id) {
