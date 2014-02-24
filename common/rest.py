@@ -141,7 +141,7 @@ class PlayerDetail(generics.RetrieveUpdateAPIView):
                 return Response({'error': e.message}, status.HTTP_500_INTERNAL_SERVER_ERROR)
             except common.Team.DoesNotExist:
                 return Response({}, status.HTTP_404_NOT_FOUND)
-            
+
         serializer = self.get_serializer(self.object)
         return Response(serializer.data)
 
