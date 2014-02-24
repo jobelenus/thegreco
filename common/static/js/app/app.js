@@ -64,6 +64,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         url: "player/{player_id}/",
         parent: "home"
     });
+    $stateProvider.state('player_chosen.edit', {
+        url: "edit/",
+        onEnter: function($stateParams, $state, $modal) {
+            $modal.open({
+                templateUrl: '/static/partials/player.detail.html',
+                controller: "PlayerDetail"
+            }).result.then(function() {
+                // nothing
+            }, function(result) {
+                return $state.transitionTo("player_chosen", {player_id: $state.params.player_id});
+            });
+        }
+    });
     $stateProvider.state('season_team_chosen', {
         url: "team/{team_id}/season/{season_id}/",
         parent: "home"

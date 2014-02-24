@@ -15,6 +15,14 @@ services.factory('TeamDetail', ['djResource',
     });
   }]);
 
+services.factory('PlayerDetail', ['djResource',
+  function($resource){
+    return $resource('/rest/common/players/:id/detail/', {id: '@id'}, {
+      query: {method:'GET', params:{}, isArray:true},
+      add_season: {method:'PUT', params:{}, isArray:false}
+    });
+  }]);
+
 services.factory('Player', ['djResource',
   function($resource){
     return $resource('/rest/common/players/:id', {}, {

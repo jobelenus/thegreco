@@ -163,8 +163,7 @@ PlayerController.prototype.filter_function = function(player) {
         return player;
     }
 };
-controllers.controller('PlayerController', ['$scope', 'Player', '$state', '$q', PlayerController]) ;
-            
+controllers.controller('PlayerController', ['$scope', 'Player', '$state', '$q', PlayerController]) ;    
 
 controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', '$rootScope', function($scope, TeamDetail, $state, $rootScope) {
     $scope.form = {season: 0};
@@ -176,9 +175,32 @@ controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', '$rootSc
         } else {
             TeamDetail.add_season({'id': $scope.team.id, 'season': $scope.form.season}, function(team) {
                 $scope.messages.success = true;
-                $rootScope.$broadcast('$stateChangeSuccess');  // update the other controllers with the new data
+                $rootScope.$broadcast('$stateChangeSuccess');
                 $scope.form.season = 0;
                 $scope.team = team;
+            }, function() {
+                $scope.messages.an_error = true;
+            });
+        }
+    };
+    $scope.dismiss = function() {
+        $scope.$dismiss();
+    };
+}]);
+
+controllers.controller('PlayerDetail', ['$scope', 'PlayerDetail', '$state', '$rootScope', function($scope, PlayerDetail, $state, $rootScope) {
+    $scope.form = {season: 0, team: 0};
+    $scope.messages = {};
+    $scope.player = PlayerDetail.get({id: $state.params.player_id});
+    $scope.add = function() {
+        if($scope.form.season === 0) {
+            $scope.messages.choose_error = true;
+        } else {
+            PlayerDetail.add_season({'id': $scope.player.id, 'season': $scope.form.season}, function(player) {
+                $scope.messages.success = true;
+                $rootScope.$broadcast('$stateChangeSuccess');
+                $scope.form.season = 0;
+                $scope.player = player;
             }, function() {
                 $scope.messages.an_error = true;
             });

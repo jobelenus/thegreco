@@ -17,5 +17,6 @@ urlpatterns = patterns(
     url(r'^app/$', staff_member_required(TemplateView.as_view(template_name='common/app.html')), name="app"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^rest/common/teams/(?P<pk>\d+)/detail/', common_rest.TeamDetail.as_view()),
+    url(r'^rest/common/players/(?P<pk>\d+)/detail/', common_rest.PlayerDetail.as_view()),
     url(r'^rest/common/', include(common_rest.router.urls))
 )
