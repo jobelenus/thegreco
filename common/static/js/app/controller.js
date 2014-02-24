@@ -1,6 +1,6 @@
 var controllers = angular.module('appControllers', []);
 
-controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', function($scope, Team, Player, $state) {
+controllers.controller('TeamController', ['$scope', 'Team', '$state', '$q', function($scope, Team, $state, $q) {
     $scope.selected = {id: 0};
     $scope.choose = function(team_id) {
         if($scope.selected.id == team_id) {
@@ -9,12 +9,16 @@ controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', 
         }
         $scope.state_machine($state, $state.params.season_id, team_id, $state.params.player_id);
     };
-    
+
+    var deferred = $q.defer();
+    $scope._teams = Team.query({}, function() {
+        deferred.resolve();
+    });
     var set = function() {
         if($state.params.team_id) {
             $scope.selected.id = $state.params.team_id;
         }
-        $scope._teams = Team.query({}, function() {
+        deferred.promise.then(function() {
             $scope.teams = $scope._teams.filter(function(team) {
                 if($state.params.season_id) {
                     for(var i in team.seasons) {
@@ -49,7 +53,7 @@ controllers.controller('TeamController', ['$scope', 'Team', 'Player', '$state', 
     });
 }]);
 
-controllers.controller('SeasonController', ['$scope', 'Season', 'Player', '$state', function($scope, Season, Player, $state) {
+controllers.controller('SeasonController', ['$scope', 'Season', '$state', '$q', function($scope, Season, $state, $q) {
     $scope.selected = {id: 0};
     $scope.choose = function(season_id) {
         if($scope.selected.id == season_id) {
@@ -58,11 +62,15 @@ controllers.controller('SeasonController', ['$scope', 'Season', 'Player', '$stat
         }
         $scope.state_machine($state, season_id, $state.params.team_id, $state.params.player_id);
     };
+    var deferred = $q.defer();
+    $scope._seasons = Season.query({}, function() {
+        deferred.resolve();
+    });
     var set = function() {
         if($state.params.season_id) {
             $scope.selected.id = $state.params.season_id;
         }
-        $scope._seasons = Season.query({}, function() {
+        deferred.promise.then(function() {
             $scope.seasons = $scope._seasons.filter(function(season) {
                 if($state.params.team_id) {
                     for(var i in season.teams) {
@@ -97,7 +105,7 @@ controllers.controller('SeasonController', ['$scope', 'Season', 'Player', '$stat
     });
 }]);
 
-controllers.controller('PlayerController', ['$scope', 'Player', '$state', function($scope, Player, $state) {
+controllers.controller('PlayerController', ['$scope', 'Player', '$state', '$q', function($scope, Player, $state, $q) {
     $scope.selected = {id: 0};
     $scope.choose = function(player_id) {
         if($scope.selected.id == player_id) {
@@ -106,11 +114,15 @@ controllers.controller('PlayerController', ['$scope', 'Player', '$state', functi
         }
         $scope.state_machine($state, $state.params.season_id, $state.params.team_id, player_id);
     };
+    var deferred = $q.defer();
+    $scope._players = Player.query({}, function() {
+        deferred.resolve();
+    });
     var set = function() {
         if($state.params.player_id) {
             $scope.selected.id = $state.params.player_id;
         }
-        $scope._players = Player.query({}, function() {
+        deferred.promise.then(function() {
             $scope.players = $scope._players.filter(function(player) {
                 if($state.params.team_id) {
                     for(var i in player.season_teams) {
