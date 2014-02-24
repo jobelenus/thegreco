@@ -28,22 +28,6 @@ class PlayerSerializer(AdminEditURLMixin, serializers.ModelSerializer):
         fields = ('id', 'name', 'email', 'gender', 'seasons', 'created_on', 'modified_on', 'season_teams', 'admin_edit_url')
 
 
-class PlayerDetailSerializer(AdminEditURLMixin, serializers.ModelSerializer):
-    season_teams = TeamPlayerSeasonSerializer(source='season_teams')
-    seasons_not_in = serializers.SerializerMethodField('get_seasons_not_in')
-
-    def get_seasons_not_in(self, instance):
-        seasons_not_in = common.Season.objects.exclude(id__in=instance.seasons.all())
-        if seasons_not_in:
-            return [{'id': s.id, 'name': s.name} for s in seasons_not_in]
-        else:
-            return []
-
-    class Meta:
-        model = common.Player
-        fields = ('id', 'name', 'email', 'gender', 'seasons', 'seasons_not_in', 'created_on', 'modified_on', 'season_teams')
-
-
 class TeamSerializer(AdminEditURLMixin, serializers.ModelSerializer):
     admin_edit_url = serializers.SerializerMethodField('get_admin_edit_url')
     season_players = TeamPlayerSeasonSerializer(source='season_players')
@@ -60,6 +44,23 @@ class SeasonSerializer(AdminEditURLMixin, serializers.ModelSerializer):
     class Meta:
         model = common.Season
         fields = ('id', 'name', 'created_on', 'modified_on', 'teams', 'players', 'admin_edit_url')
+
+
+class PlayerDetailSerializer(AdminEditURLMixin, serializers.ModelSerializer):
+    season_teams = TeamPlayerSeasonSerializer(source='season_teams')
+    seasons_not_in = serializers.SerializerMethodField('get_seasons_not_in')
+    seasons = SeasonSerializer(source='seasons')
+
+    def get_seasons_not_in(self, instance):
+        seasons_not_in = common.Season.objects.exclude(id__in=instance.seasons.all())
+        if seasons_not_in:
+            return [{'id': s.id, 'name': s.name} for s in seasons_not_in]
+        else:
+            return []
+
+    class Meta:
+        model = common.Player
+        fields = ('id', 'name', 'email', 'gender', 'seasons', 'seasons_not_in', 'created_on', 'modified_on', 'season_teams')
 
 
 class TeamDetailSerializer(AdminEditURLMixin, serializers.ModelSerializer):
