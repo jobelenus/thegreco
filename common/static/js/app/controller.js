@@ -209,7 +209,7 @@ controllers.controller('TeamDetail', ['$scope', 'TeamDetail', '$state', '$rootSc
 
 controllers.controller('PlayerDetail', ['$scope', 'PlayerDetail', '$state', '$rootScope', function($scope, PlayerDetail, $state, $rootScope) {
     $scope.form = {season: 0, team: 0};
-    $scope.messages = {};
+    $scope.messages = {error: "Sorry, it didn't work"};
     $scope.player = PlayerDetail.get({id: $state.params.player_id});
     $scope.add = function() {
         if($scope.form.season === 0) {
@@ -220,8 +220,11 @@ controllers.controller('PlayerDetail', ['$scope', 'PlayerDetail', '$state', '$ro
                 $rootScope.$broadcast('$stateChangeSuccess');
                 $scope.form.season = 0;
                 $scope.player = player;
-            }, function() {
+            }, function(resp) {
                 $scope.messages.an_error = true;
+                if(resp.data.error) {
+                    $scope.messages.error = resp.data.error;
+                }
             });
         }
     };

@@ -5,7 +5,7 @@
         <form novalidate method="POST" class="form form-inline" ng-if="player.seasons_not_in">
             <p class="message bg-success text-success" ng-show="messages.success">Season added!</p>
             <p class="message bg-danger text-danger" ng-show="messages.choose_error">Choose a season!</p>
-            <p class="message bg-danger text-danger" ng-show="messages.an_error">Sorry, it didn't work</p>
+            <p class="message bg-danger text-danger" ng-show="messages.an_error">{{messages.error}}</p>
             <button ng-click="add()" class="btn btn-primary season-add">Add To Season</button>
             <select class="form-control" ng-model="form.season">
                 <option value="0">Choose...</option>
