@@ -127,7 +127,7 @@ class PlayerDetail(generics.RetrieveUpdateAPIView):
         if season_id:
             try:
                 season = common.Season.objects.get(id=season_id)
-                common.add_player_to_season(self.object, season)
+                common.add_player_to_season(player=self.object, season=season)
             except common.PermissionsException as e:
                 return Response({'error': e.message}, status.HTTP_500_INTERNAL_SERVER_ERROR)
             except common.Season.DoesNotExist:

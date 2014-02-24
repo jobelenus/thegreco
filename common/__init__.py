@@ -98,10 +98,10 @@ def add_team_to_season(team, season):
 
 @gender_rules(PermissionsException.MSG_ELIGIBLE)
 @open_season(PermissionsException.MSG_SEASON)
-def add_player_to_season(player, season):
+def add_player_to_season(player=None, season=None):
     if not season.is_open:
         raise PermissionsException(PermissionsException.MSG_SEASON)
-    PlayerSeasons.objects.create(player=player, season=season)
+    return PlayerSeasons.objects.create(player=player, season=season)
 
 
 def find_players_in_season(season):
