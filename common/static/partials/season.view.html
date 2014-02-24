@@ -16,7 +16,6 @@
             <li class="list-group-item" ng-class="{ 'list-group-item-success': season.id == selected.id }" ng-repeat="season in seasons | filter:query">
                 <a ng-click="choose(season.id)">{{season.name}}</a>
                 <div class="pull-right">
-                    <a ng-click="edit(season.id)" class="edit glyphicon glyphicon-edit">&nbsp;</a>
                     <a href="{{season.admin_edit_url}}" target="_blank" class="glyphicon glyphicon-share-alt">&nbsp;</a>
                 </div>
             </li>
