@@ -1,58 +1,94 @@
 var controllers = angular.module('appControllers', []);
 
-controllers.controller('TeamController', ['$scope', 'Team', '$state', '$q', function($scope, Team, $state, $q) {
+var ListController = function($scope, Resource, $state, $q) {
+    var self = this;
+    self.$scope = $scope;
+    self.$state = $state;
     $scope.selected = {id: 0};
-    $scope.choose = function(team_id) {
-        if($scope.selected.id == team_id) {
+    $scope.choose = function(resource_id) {
+        if($scope.selected.id == resource_id) {
             $scope.selected.id = 0;
-            team_id = 0;
+            resource_id = 0;
         }
-        $scope.state_machine($state, $state.params.season_id, team_id, $state.params.player_id);
+        self.update_state_machine(resource_id);
     };
 
     var deferred = $q.defer();
-    $scope._teams = Team.query({}, function() {
+    $scope._resources = Resource.query({}, function() {
         deferred.resolve();
-        $('.team .panel .spinner').css('display', 'none');
+        self.stop_spinner();
     });
     var set = function() {
-        if($state.params.team_id) {
-            $scope.selected.id = $state.params.team_id;
-        }
         deferred.promise.then(function() {
-            $scope.teams = $scope._teams.filter(function(team) {
-                if($state.params.season_id) {
-                    for(var i in team.seasons) {
-                        if(team.seasons[i] == $state.params.season_id) {
-                            if($state.params.player_id) {
-                                for(var j in team.season_players) {
-                                    if($state.params.player_id == team.season_players[j].player) {
-                                        return team;
-                                    }
-                                }
-                            } else {
-                                return team;
-                            }
-                        }
-                    }
-                    return null;
-                } else if($state.params.player_id) {
-                    for(var k in team.season_players) {
-                        if($state.params.player_id == team.season_players[k].player) {
-                            return team;
-                        }
-                    }
-                    return null;
-                } else {
-                    return team;
-                }
-            });
+            $scope.teams = $scope._resources.filter(self.filter_function, self);
         });
     };
     $scope.$on('$stateChangeSuccess', function() {
+        self.update_param_id();
         set();
     });
-}]);
+};
+ListController.prototype.update_state_machine = function(resource_id) {
+    alert('Implement me');
+};
+ListController.prototype.stop_spinner = function() {
+    alert('Implement me');
+};
+ListController.prototype.update_param_id = function() {
+    alert('Implement me');
+};
+ListController.filter_function = function(resource) {
+    alert('Implement me');
+};
+
+var TeamController = function($scope, Resource, $state, $q) {
+    ListController.call(this, $scope, Resource, $state, $q);
+};
+TeamController.prototype = Object.create(ListController.prototype);
+
+TeamController.prototype.update_state_machine = function(team_id) {
+    this.$scope.state_machine(this.$state, this.$state.params.season_id, team_id, this.$state.params.player_id);
+};
+
+TeamController.prototype.stop_spinner = function() {
+    $('.team .panel .spinner').css('display', 'none');
+};
+
+TeamController.prototype.update_param_id = function() {
+    if(this.$state.params.team_id) {
+        this.$scope.selected.id = this.$state.params.team_id;
+    }
+};
+
+TeamController.prototype.filter_function = function(team) {
+    if(this.$state.params.season_id) {
+        for(var i in team.seasons) {
+            if(team.seasons[i] == this.$state.params.season_id) {
+                if(this.$state.params.player_id) {
+                    for(var j in team.season_players) {
+                        if(this.$state.params.player_id == team.season_players[j].player) {
+                            return team;
+                        }
+                    }
+                } else {
+                    return team;
+                }
+            }
+        }
+        return null;
+    } else if(this.$state.params.player_id) {
+        for(var k in team.season_players) {
+            if(this.$state.params.player_id == team.season_players[k].player) {
+                return team;
+            }
+        }
+        return null;
+    } else {
+        return team;
+    }
+};
+
+controllers.controller('TeamController', ['$scope', 'Team', '$state', '$q', TeamController]);
 
 controllers.controller('SeasonController', ['$scope', 'Season', '$state', '$q', function($scope, Season, $state, $q) {
     $scope.selected = {id: 0};
