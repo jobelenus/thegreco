@@ -217,9 +217,17 @@ controllers.controller('PlayerDetail', ['$scope', 'PlayerDetail', '$state', '$ro
         } else {
             PlayerDetail.add_season({'id': $scope.player.id, 'season': $scope.form.season}, function(player) {
                 $scope.messages.success = true;
-                $rootScope.$broadcast('$stateChangeSuccess');
                 $scope.form.season = 0;
                 $scope.player = player;
+                var promises = [];
+                for(var i in player.seasons) {
+                    var deferred = $q.defer();
+                    promises.push(deferred);
+                    $rootScope.$broadcast('updateSeason', deferred, player.seasons[i]);
+                }
+                $q.all(promises).then(function() {
+                    $rootScope.$broadcast('$stateChangeSuccess');
+                });
             }, function(resp) {
                 $scope.messages.an_error = true;
                 if(resp.data.error) {
